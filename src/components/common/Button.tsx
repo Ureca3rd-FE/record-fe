@@ -7,9 +7,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const buttonVariants: Record<string, string> = {
-  default: "bg-color-primary-200 text-white",
+  default: "bg-primary-200 text-white",
   ghost:
-    "bg-transparent text-color-primary-200",
+    "bg-transparent text-primary-200",
 };
 
 export default function Button({
