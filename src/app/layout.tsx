@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import RootProvider from "@/components/common/root-provider";
+import RootProvider from "@/components/common/RootProvider";
 import { cn } from "@/utils/cn";
 
 const pretendard = localFont({
