@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme inline {
+  --spacing-mobile: 480px;
+
+  --font-pretendard: var(--font-pretendard);
+  --font-kotra-hope: var(--font-kotra-hope);
+}
+
+@layer base {
+  body {
+    @apply max-w-mobile mx-auto;
+  }
+}
