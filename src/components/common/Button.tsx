@@ -2,14 +2,15 @@
 
 import { cn } from "@/utils/cn";
 
+type ButtonVariant = "default" | "ghost";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: string;
+  variant?: ButtonVariant;
 }
 
-const buttonVariants: Record<string, string> = {
+const buttonVariants: Record<ButtonVariant, string> = {
   default: "bg-primary-200 text-white",
-  ghost:
-    "bg-transparent text-primary-200",
+  ghost: "bg-transparent text-primary-200",
 };
 
 export default function Button({
