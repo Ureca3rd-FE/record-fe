@@ -1,40 +1,33 @@
 "use client";
-import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import Calendar from "@/assets/calendar-days.svg";
 import Home from "@/assets/circle-user.svg";
 import House from "@/assets/house.svg";
+
 export default function Navbar() {
   const path = usePathname();
-  const isActive = (route: string) => path === route;
+  const navItems = [
+    { href: "/", label: "홈", icon: <House /> },
+    { href: "/calendar", label: "달력", icon: <Calendar /> },
+    { href: "/mypage", label: "마이페이지", icon: <Home /> },
+  ];
   return (
-    <nav className="align-items-center bg-primary-200 flex w-full">
-      <Link
-        href="/"
-        className={`pd-2 flex flex-1 flex-col items-center justify-center pt-2 pb-2 ${isActive("/") ? "text-back-200" : "text-back-100"}`}
-      >
-        {" "}
-        <House />
-        <span>홈</span>
-      </Link>
-      <Link
-        href="/calendar"
-        className={`flex flex-1 flex-col items-center justify-center pt-2 pb-2 ${isActive("/calendar") ? "text-back-200" : "text-back-100"}`}
-      >
-        {" "}
-        <Calendar />
-        <span>달력</span>
-      </Link>
-      <Link
-        href="/mypage"
-        className={`flex flex-1 flex-col items-center justify-center pt-2 pb-2 ${isActive("/mypage") ? "text-back-200" : "text-back-100"}`}
-      >
-        {" "}
-        <Home />
-        <span>마이페이지</span>
-      </Link>
+    <nav className="max-w-mobile align-items-center bg-primary-200 fixed bottom-0 mx-auto flex w-full">
+      {navItems.map(({ href, label, icon }) => {
+        const active = path === href;
+        return (
+          <Link
+            key={href}
+            href={href}
+            className={`flex flex-1 flex-col items-center justify-center p-2 ${active ? "text-back-200" : "text-back-100"}`}
+          >
+            {icon}
+            <span>{label}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }
