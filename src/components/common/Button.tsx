@@ -2,31 +2,29 @@
 
 import { cn } from "@/utils/cn";
 
-type ButtonVariant = "primary" | "secondary";
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
+  variant?: string;
 }
+
+const buttonVariants: Record<string, string> = {
+  default: "bg-color-primary-200 text-white",
+  ghost:
+    "bg-transparent text-color-primary-200 border border-color-primary-200",
+};
 
 export default function Button({
   type = "button",
-  variant = "primary",
   children,
   className,
+  variant = "default",
   ...props
 }: ButtonProps) {
-  const variantStyles: Record<ButtonVariant, string> = {
-    primary: "bg-primary-200 text-white",
-    secondary:
-      "bg-secondary-100 text-primary-200",
-  };
-
   return (
     <button
       type={type}
       className={cn(
         "w-full font-semibold px-5 py-3 rounded-[20px] transition active:scale-[0.98] disabled:opacity-60",
-        variantStyles[variant],
+        buttonVariants[variant],
         className
       )}
       {...props}
