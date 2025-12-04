@@ -5,10 +5,27 @@
 
   --font-pretendard: var(--font-pretendard);
   --font-kotra-hope: var(--font-kotra-hope);
+
+  --color-primary-100: #a78668;
+  --color-primary-200: #83402e;
+  --color-primary-300: #531607;
+  --color-secondary-100: #eddbcd;
+  --color-secondary-200: #f2cca2;
+  --color-secondary-300: #644b30;
+  --color-back-100: #eddbcd;
+  --color-back-200: #f3f3f3;
+  --color-text-100: #898989;
+  --color-text-200: #333333;
+  --color-graph-pink: #ff5979;
+  --color-graph-orange: #ff9642;
 }
 
 @layer base {
   body {
-    @apply max-w-mobile mx-auto;
+    @apply max-w-mobile text-text-200 mx-auto;
   }
+}
+
+@utility bg-gradient {
+  background: linear-gradient(135deg, var(--color-primary-200), #b79182);
 }
