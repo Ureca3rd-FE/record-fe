@@ -1,15 +1,12 @@
 "use client";
-
-import type { ButtonProps } from "@/types/button";
 import { cn } from "@/utils/cn";
-
 
 export default function Button({
   type = "button",
   children,
   className,
   ...props
-}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       type={type}
