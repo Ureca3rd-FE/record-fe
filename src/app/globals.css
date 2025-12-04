@@ -18,7 +18,6 @@
   --color-text-200: #333333;
   --color-graph-pink: #ff5979;
   --color-graph-orange: #ff9642;
-  --color-gradient: linear-gradient(135deg, #83402e #b79182);
 }
 
 @layer base {
@@ -27,8 +26,6 @@
   }
 }
 
-@layer utilities {
-  .bg-gradient {
-    background: linear-gradient(135deg, var(--color-primary-200), #b79182);
-  }
+@utility bg-gradient {
+  background: linear-gradient(135deg, var(--color-primary-200), #b79182);
 }
