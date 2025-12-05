@@ -4,7 +4,7 @@ import CancelIcon from "@/assets/cancleIcon.svg";
 
 import Button from "./Button";
 
-export interface ModalProps {
+interface ModalProps {
   open: boolean;
   onClose: () => void;
   title?: string;
