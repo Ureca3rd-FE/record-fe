@@ -29,7 +29,7 @@ export default function Modal({
 
   if (!open) return null;
 
-  //확인 버튼 클릭 시 실행될 함수! *광수오빠가 말한 onClick Props가 이거 맞나요? 버튼 클릭시 원하는 로직 실행하기
+  //확인 버튼 클릭 시 실행될 함수!
   const handleClick = () => {
     if(onConfirm) onConfirm();
     else onClose();
@@ -38,7 +38,7 @@ export default function Modal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       
-      {/* 배경 클릭하면 모달 맏힘  */}
+      {/* 배경 클릭하면 모달 닫힘  */}
       <div
         className="absolute inset-0 bg-black/30 backdrop-blur-sm"
         onClick={onClose}
