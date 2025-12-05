@@ -11,7 +11,7 @@ interface ModalProps {
   description?: string;
   buttonText?: string;
   children?: React.ReactNode;
-  showButton?: boolean; //버튼 없는 애들
+  showButton?: boolean; //버튼 없는 
   onConfirm?: () => void;
 }
 
