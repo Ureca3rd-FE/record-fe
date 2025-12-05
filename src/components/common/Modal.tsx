@@ -1,9 +1,19 @@
 "use client";
 
+import React from "react";
+
 import CancelIcon from "@/assets/cancleIcon.svg";
-import type { ModalProps } from "@/types/modal";
 
 import Button from "./Button";
+
+export interface ModalProps {
+  open: boolean;
+  onClose: () => void;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  children?: React.ReactNode;
+}
 
 
 export default function Modal({
