@@ -25,7 +25,7 @@ export default function Modal({
       ></div>
 
       {/* 박스x */}
-      <div className="relative z-10 bg-secondary-100 w-[90%] max-w-[430px] rounded-2xl p-8 shadow-lg text-center">
+      <div className="relative z-10 bg-secondary-100 w-[90%] rounded-2xl p-8 shadow-lg text-center">
 
         {/* 닫기 */}
         <button
