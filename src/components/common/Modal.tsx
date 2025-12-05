@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import CancelIcon from "@/assets/cancleIcon.svg";
 
 import Button from "./Button";
