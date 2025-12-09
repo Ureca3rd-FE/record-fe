@@ -22,10 +22,17 @@
 
 @layer base {
   body {
-    @apply max-w-mobile text-text-200 mx-auto;
+    @apply max-w-mobile text-text-200 bg-secondary-100 mx-auto;
+  }
+  button {
+    @apply cursor-pointer disabled:cursor-not-allowed;
   }
 }
 
 @utility bg-gradient {
   background: linear-gradient(135deg, var(--color-primary-200), #b79182);
+}
+
+.embla__slide {
+  flex: 0 0 100%;
 }
