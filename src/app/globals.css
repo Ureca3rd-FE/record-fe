@@ -32,3 +32,7 @@
 @utility bg-gradient {
   background: linear-gradient(135deg, var(--color-primary-200), #b79182);
 }
+
+.embla__slide {
+  flex: 0 0 100%;
+}
