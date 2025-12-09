@@ -51,13 +51,14 @@ export default function DiarySummary() {
         <div className="size-6" />
       </header>
       <div className="relative mt-10">
-        <Image
-          src={runningDalbam}
-          alt="running dalbam"
-          width={60}
-          height={60}
-          className="bg-secondary-100 absolute right-10 z-10 -translate-y-1/2"
-        />
+        <div className="absolute right-10 z-10 size-[60px] -translate-y-1/2">
+          <Image
+            src={runningDalbam}
+            alt="running dalbam"
+            fill
+            className="bg-secondary-100 absolute object-cover"
+          />
+        </div>
         <hr className="border-primary-200" />
       </div>
       <section className="my-12 space-y-5 px-4">
