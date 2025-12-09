@@ -3,6 +3,12 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useState } from "react";
 
+import CryingImg from "@/assets/cryingImg.svg";
+import GreatImg from "@/assets/greatImg.svg";
+import HelloImg from "@/assets/helloImg.svg";
+import WhatImg from "@/assets/whatImg.svg";
+import WriteImg from "@/assets/writingImg.svg";
+
 import { da, ko } from "date-fns/locale";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import DatePicker from "react-datepicker";
