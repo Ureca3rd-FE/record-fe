@@ -22,7 +22,7 @@ function Modal({ children, isOpen, onClose, className: _className, ...props }: M
 
   const className = cn(
     _className,
-    "bg-secondary-100 relative z-10 w-[90%] rounded-2xl p-8 text-center shadow-lg space-y-2.5"
+    "bg-secondary-100 relative z-10 w-[90%] max-w-mobile rounded-2xl p-8 text-center shadow-lg space-y-2.5"
   );
 
   if (!isOpen || typeof document === "undefined") return null;
