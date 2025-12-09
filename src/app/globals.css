@@ -2,6 +2,7 @@
 
 @theme inline {
   --spacing-mobile: 480px;
+  --spacing-navbar: 64px;
 
   --font-pretendard: var(--font-pretendard);
   --font-kotra-hope: var(--font-kotra-hope);
@@ -26,6 +27,10 @@
   }
   button {
     @apply cursor-pointer disabled:cursor-not-allowed;
+  }
+
+  input[type="text"] {
+    @apply placeholder:text-[#D3D3D3];
   }
 }
 

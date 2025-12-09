@@ -1,83 +1,109 @@
 "use client";
 
+import { createContext, useContext } from "react";
+
 import CancelIcon from "@/assets/cancleIcon.svg";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { cn } from "@/utils/cn";
+
+import { createPortal } from "react-dom";
 
 import Button from "./Button";
 
-interface ModalProps {
-  open: boolean;
+const ModalContext = createContext<{ isOpen: boolean; onClose: () => void } | null>(null);
+
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+  isOpen: boolean;
   onClose: () => void;
-  title?: string;
-  description?: string;
-  buttonText?: string;
-  children?: React.ReactNode;
-  showButton?: boolean; //버튼 없는 
-  onConfirm?: () => void;
 }
 
+function Modal({ children, isOpen, onClose, className: _className, ...props }: ModalProps) {
+  const modalRef = useOutsideClick<HTMLDivElement>(() => onClose());
 
-export default function Modal({
-  open,
-  onClose,
-  title = "알림",
-  description,
-  buttonText = "확인",
-  onConfirm,
-  showButton = true,
-  children,
-}: ModalProps) {
+  const className = cn(
+    _className,
+    "bg-secondary-100 relative z-10 w-[90%] max-w-mobile rounded-2xl p-8 text-center shadow-lg space-y-2.5"
+  );
 
-  if (!open) return null;
+  if (!isOpen || typeof document === "undefined") return null;
 
-  //확인 버튼 클릭 시 실행될 함수!
-  const handleClick = () => {
-    if(onConfirm) onConfirm();
-    else onClose();
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      
+  return createPortal(
+    <ModalContext.Provider value={{ isOpen, onClose }}>
       {/* 배경 클릭하면 모달 닫힘  */}
-      <div
-        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
-        onClick={onClose}
-      ></div>
-
-
-      {/* 박스x */}
-      <div className="relative z-10 bg-secondary-100 w-[90%] rounded-2xl p-8 shadow-lg text-center">
-        {/* 중요! 버튼이 있을 시 = true 일때만 닫기 아이콘을 표시 */}
-        {/* 닫기 */}
-        {showButton && (
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-primary-200 text-2xl"
-        >
-        <CancelIcon className="w-6 h-6 text-primary-200" />
-        </button>
-        )}
-
-
-        {/* 제목 */}
-        <h2 className="text-primary-200 font-bold text-2xl mb-4">
-          {title}
-        </h2>
-
-        {children}
-
-        {/* 내용 */}
-        {description && (
-          <p className="text-primary-200 font-semibold mb-8">
-            {description}
-          </p>
-        )}
-
-        {/* 버튼이 보일때 =true일때만 버튼 표시 */}
-        {showButton && (
-        <Button onClick={onClose}>{buttonText}</Button>
-        )}
+      <div className="font-kotra-hope fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+        <div ref={modalRef} className={className} {...props}>
+          {children}
+        </div>
       </div>
-    </div>
+    </ModalContext.Provider>,
+    document.body
   );
 }
+
+function ModalCloseButton() {
+  const context = useContext(ModalContext);
+
+  if (context === null) {
+    throw new Error("Modal 컴포넌트 내부에서 사용되어야 합니다.");
+  }
+
+  const { onClose } = context;
+
+  return (
+    <button onClick={onClose} className="text-primary-200 absolute top-4 right-4 text-2xl">
+      <CancelIcon className="text-primary-200 h-6 w-6" />
+    </button>
+  );
+}
+
+function ModalHeader({
+  children,
+  className: _className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) {
+  const context = useContext(ModalContext);
+
+  if (context === null) {
+    throw new Error("Modal 컴포넌트 내부에서 사용되어야 합니다.");
+  }
+
+  const className = cn(_className, "text-primary-200  text-2xl ");
+
+  return (
+    <h2 className={className} {...props}>
+      {children}
+    </h2>
+  );
+}
+
+function ModalContent({
+  children,
+  className: _className,
+  ...props
+}: React.ParamHTMLAttributes<HTMLParagraphElement>) {
+  const context = useContext(ModalContext);
+
+  if (context === null) {
+    throw new Error("Modal 컴포넌트 내부에서 사용되어야 합니다.");
+  }
+
+  const className = cn(_className, "text-primary-100   whitespace-pre-line");
+
+  return (
+    <p className={className} {...props}>
+      {children}
+    </p>
+  );
+}
+
+function ModalConfirmButton({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const context = useContext(ModalContext);
+
+  if (context === null) {
+    throw new Error("Modal 컴포넌트 내부에서 사용되어야 합니다.");
+  }
+
+  return <Button {...props}>{children}</Button>;
+}
+
+export { Modal, ModalCloseButton, ModalHeader, ModalContent, ModalConfirmButton };
