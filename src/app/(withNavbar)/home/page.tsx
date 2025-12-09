@@ -1,40 +1,32 @@
 import Image from "next/image";
 
+import Logo from "@/assets/logo.svg";
+import SubmitDiary from "@/components/home/SubmitDiary";
+
+const curiousDalbam = "/dalbam/curious.webp";
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between bg-white px-16 py-32 sm:items-start dark:bg-black">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl leading-10 font-semibold tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="px-4 pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
+      <header>
+        <Logo />
+      </header>
+      <div className="font-kotra-hope text-primary-200 mt-6">
+        {/* 
+          로그인이 안된 상태라면 0일, 된 상태라면 공유한 일수 표시 
+          서비스 가입일 기준 공유일지, 일기 쓴 개수로 공유일지
+        */}
+        <p className="text-end">
+          감정을 공유한지 <span className="text-xl">10</span>일째
+        </p>
+        <div className="mt-6 flex flex-col items-center justify-center">
+          <p>오늘의 달밤 일기</p>
+          <Image src={curiousDalbam} alt="curious dalbam" width={120} height={120} />
         </div>
-      </main>
-    </div>
+        {/* TODO: 오늘의 일기 API 연동하여 표시하기 */}
+        <p className="mt-5 text-center">오늘 하루 중 가장 기분 좋았던 순간은 언제였나요?</p>
+      </div>
+      <SubmitDiary />
+    </main>
   );
 }
