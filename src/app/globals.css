@@ -35,11 +35,11 @@
 }
 /* 요일 밑에 선이 오게 변경 */
 .react-datepicker__day-names {
-  @apply !border-primary-200 !border-b;
+  @apply !border-primary-200 !mb-1 !border-b;
 }
 /* 요일 글자색 변경 */
 .react-datepicker__day-name {
-  @apply !text-primary-200 !h-10 !w-12;
+  @apply !text-primary-200 !h-8 !w-12;
 }
 .react-datepicker__day--outside-month {
   @apply !pointer-events-none !invisible;

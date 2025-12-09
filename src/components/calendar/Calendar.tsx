@@ -53,13 +53,23 @@ export default function Calendar({
     );
   };
 
+  const isSixWeekMonth = (date: Date) => {
+    const first = new Date(date.getFullYear(), date.getMonth(), 1).getDay(); // 첫날 요일
+    const last = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(); // 마지막 날짜
+
+    // (첫 주에서 차지하는 빈칸 + 전체 일수) / 7
+    const weeks = Math.ceil((first + last) / 7);
+
+    return weeks === 6;
+  };
+
   return (
     <div className="relative mt-6 flex justify-center rounded-lg p-1">
       <Image
         src={writingImg}
         alt={"일기 작성 이미지"}
         fill
-        className="scale-45 object-contain opacity-40"
+        className="scale-60 object-contain opacity-40"
       />
 
       <DatePicker
@@ -75,8 +85,8 @@ export default function Calendar({
         onMonthChange={(d) => {
           if (d === null) return;
           //console.log("trigger", d);
-          d.setDate(1);
-          onSelectDate(d);
+          const firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
+          onSelectDate(firstDay);
         }}
         inline //달력 고정(팝업이 아니도록)
         locale={ko}
@@ -90,11 +100,12 @@ export default function Calendar({
         }}
         renderDayContents={(day, dateObj) => {
           const d = dateObj.getDate();
+          const isSixWeeks = isSixWeekMonth(dateObj);
           return (
             <div className="flex flex-col items-center">
               <span>{d}</span>
               {/* 공통 하단 공간 */}
-              <span className="m-4 flex h-3 text-sm">
+              <span className={`m-4 flex ${isSixWeeks ? "h-1" : "h-3"} text-sm`}>
                 {tempdiaryDates.includes(toYMD(dateObj)) ? "🎉" : ""}
               </span>
             </div>
