@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/Button";
-import { useCheckNickname } from "@/lib/tanstack/mutation/user";
+import Loader from "@/components/common/Loader";
+import { useCheckNickname, useUpdateUserNickname } from "@/lib/tanstack/mutation/user";
 import { cn } from "@/utils/cn";
 
 export default function Signup() {
@@ -11,9 +13,10 @@ export default function Signup() {
   const [isChecked, setIsChecked] = useState(false);
   const [checkedNickname, setCheckedNickname] = useState<string | null>(null);
 
+  const router = useRouter();
+
   const { mutate: checkNickname, isPending } = useCheckNickname({
     onSuccess: (data) => {
-      console.log(data);
       setIsChecked(data.result.isDuplicated);
       setCheckedNickname(nickname);
     },
@@ -22,6 +25,17 @@ export default function Signup() {
       console.error(error);
     },
   });
+
+  const { mutate: updateUserNickname, isPending: isUpdateUserNicknamePending } =
+    useUpdateUserNickname({
+      onSuccess: () => {
+        router.replace("/home");
+      },
+      onError: (error) => {
+        alert("닉네임 등록 중 오류가 발생했어요.");
+        console.error(error);
+      },
+    });
 
   const onNicknameChange = (value: string) => {
     setNickname(value);
@@ -37,7 +51,11 @@ export default function Signup() {
     (!isChecked && checkedNickname !== null) ||
     isPending;
 
-  const isSubmitDisabled = checkedNickname === null || checkedNickname !== nickname || isChecked;
+  const isSubmitDisabled =
+    checkedNickname === null ||
+    checkedNickname !== nickname ||
+    isChecked ||
+    isUpdateUserNicknamePending;
 
   return (
     <main className="flex min-h-screen flex-col gap-5 px-4 py-6">
@@ -73,8 +91,12 @@ export default function Signup() {
           </p>
         )}
       </section>
-      <Button className="rounded-2xl" disabled={isSubmitDisabled}>
-        완료
+      <Button
+        onClick={() => updateUserNickname(nickname)}
+        className="rounded-2xl"
+        disabled={isSubmitDisabled}
+      >
+        {isUpdateUserNicknamePending ? <Loader /> : "완료"}
       </Button>
     </main>
   );

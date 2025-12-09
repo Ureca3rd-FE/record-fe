@@ -8,3 +8,8 @@ export const checkNickname = async (
   const { data } = await api.get(`/users/check-nickname?nickname=${nickname}`);
   return data;
 };
+
+export const updateUserNickname = async (nickname: string): Promise<BaseResponseDTO<void>> => {
+  const { data } = await api.put("/users/nickname", { nickname });
+  return data;
+};
