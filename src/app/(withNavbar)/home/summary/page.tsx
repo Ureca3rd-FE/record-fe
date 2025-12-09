@@ -1,10 +1,14 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import BackIcon from "@/assets/chevronLeft.svg";
 import Button from "@/components/common/Button";
+
+import download from "downloadjs";
+import html2canvas from "html2canvas";
 
 const runningDalbam = "/dalbam/running-line.webp";
 
@@ -12,10 +16,33 @@ const positiveKeywords = ["행복", "즐거움", "좋은 일"];
 const negativeKeywords = ["힘듦", "우울", "피곤"];
 
 export default function DiarySummary() {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const summaryRef = useRef<HTMLDivElement>(null);
+
   const router = useRouter();
 
+  const onDownload = async () => {
+    if (!summaryRef.current) return;
+
+    setIsDownloading(true);
+    try {
+      const canvas = await html2canvas(summaryRef.current, {
+        backgroundColor: "#eddbcd",
+        scale: 2,
+      });
+      const dataUrl = canvas.toDataURL("image/png");
+      const currentTime = new Date().getTime();
+      download(dataUrl, `${currentTime}.png`);
+    } catch (error) {
+      console.error("이미지 다운로드 실패:", error);
+      alert("이미지 다운로드에 실패했어요. 다시 시도해주세요.");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
-    <main className="font-kotra-hope pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
+    <main ref={summaryRef} className="font-kotra-hope pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
       <header className="flex items-center justify-between px-4">
         <button onClick={() => router.back()}>
           <BackIcon />
@@ -53,7 +80,9 @@ export default function DiarySummary() {
             천천히 회복시켜 줄 거예요. 앞으로도 이렇게 작은 행복들이 계속 이어지기를 응원합니다.
           </p>
         </div>
-        <Button className="mt-6 mb-3 rounded-xl py-4">다운로드</Button>
+        <Button className="mt-6 mb-3 rounded-xl py-4" onClick={onDownload} disabled={isDownloading}>
+          {isDownloading ? "다운로드 중..." : "다운로드"}
+        </Button>
         <p className="text-primary-200 text-end text-sm">오늘의 요약은 따로 저장 되지 않습니다.</p>
       </section>
     </main>
