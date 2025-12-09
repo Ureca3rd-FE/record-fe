@@ -37,7 +37,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={cn("antialiased", gowunDodum.className, pretendard.variable, kotraHope.variable)}
+        className={cn(
+          "antialiased",
+          gowunDodum.className,
+          gowunDodum.variable,
+          pretendard.variable,
+          kotraHope.variable
+        )}
       >
         <RootProvider>{children}</RootProvider>
       </body>
