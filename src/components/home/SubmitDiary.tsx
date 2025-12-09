@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import RequireLoginModal from "./RequireLoginModal";
+import SummaryModal from "./SummaryModal";
 import Button from "../common/Button";
 
 // 로그인 됐는지 안됐는지 상태 값
@@ -11,15 +12,17 @@ const isAuthenticated = false;
 
 export default function SubmitDiary() {
   const [isRequireLoginModalOpen, setIsRequireLoginModalOpen] = useState(false);
+  const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
 
   const onSubmitDiary = () => {
-    if (!isAuthenticated) {
-      // TODO: 로그인 유도 모달 띄우기
-      setIsRequireLoginModalOpen(true);
+    if (isAuthenticated) {
+      // TODO: 일기 제출 API 연동
+      setIsSummaryModalOpen(true);
       return;
     }
 
-    // TODO: 일기 제출 API 연동
+    // TODO: 로그인 유도 모달 띄우기
+    setIsRequireLoginModalOpen(true);
   };
 
   return (
@@ -37,6 +40,7 @@ export default function SubmitDiary() {
         isOpen={isRequireLoginModalOpen}
         onClose={() => setIsRequireLoginModalOpen(false)}
       />
+      <SummaryModal isOpen={isSummaryModalOpen} onClose={() => setIsSummaryModalOpen(false)} />
     </>
   );
 }
