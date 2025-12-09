@@ -2,16 +2,13 @@
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useState } from "react";
-
-import CryingImg from "@/assets/cryingImg.svg";
-import GreatImg from "@/assets/greatImg.svg";
-import HelloImg from "@/assets/helloImg.svg";
-import WhatImg from "@/assets/whatImg.svg";
-import WriteImg from "@/assets/writingImg.svg";
+import Image from "next/image";
 
 import { da, ko } from "date-fns/locale";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import DatePicker from "react-datepicker";
+
+const writingImg = "/dalbam/writing.webp";
 
 export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -41,7 +38,14 @@ export default function Calendar() {
   };
 
   return (
-    <div className="mt-10 flex h-[500px] justify-center rounded-lg p-1">
+    <div className="relative mt-10 flex h-[580px] justify-center rounded-lg p-1">
+      <Image
+        src={writingImg}
+        alt={"일기 작성 이미지"}
+        fill
+        className="scale-45 object-contain opacity-40"
+      />
+
       <DatePicker
         dateFormat="yyyy.MM.dd"
         minDate={new Date("2000-01-01")} // minDate 이전 날짜 선택 불가
@@ -51,7 +55,7 @@ export default function Calendar() {
         inline //달력 고정(팝업이 아니도록)
         locale={ko}
         renderCustomHeader={CustomHeader}
-        calendarClassName="!bg-white !bg-opacity-50 p-4 !border-primary-100 !border-2"
+        calendarClassName="!bg-white/40 p-4 !border-primary-100 !border-2"
         dayClassName={(day) => {
           if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
             return "!bg-primary-200 !rounded-full !h-7 !w-7";

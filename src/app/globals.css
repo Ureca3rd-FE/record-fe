@@ -51,3 +51,6 @@
 .react-datepicker__day--keyboard-selected {
   @apply !bg-white;
 }
+.react-datepicker__day--outside-month {
+  opacity: 0.5 !important;
+}
