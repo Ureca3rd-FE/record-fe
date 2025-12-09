@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import GoogleIcon from "@/assets/google.svg";
@@ -15,6 +16,9 @@ export default function StartButtons() {
 
   return (
     <div className="space-y-4 text-sm">
+      <Link href="/onboarding" className="mx-auto block text-center underline">
+        시작하기에 앞서
+      </Link>
       <Button
         onClick={onGoogleLogin}
         className="flex items-center justify-center gap-2 rounded-xl bg-white py-4 text-black"

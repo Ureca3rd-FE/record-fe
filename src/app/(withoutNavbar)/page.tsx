@@ -1,6 +1,6 @@
-import StartButtons from "@/components/onboarding/start-buttons";
+import StartButtons from "@/components/main/start-buttons";
 
-export default function Onboarding() {
+export default function Main() {
   return (
     <main className="flex min-h-screen flex-col px-4 py-6">
       <div className="font-pretendard flex flex-1 flex-col justify-center space-y-7 text-center font-semibold">
