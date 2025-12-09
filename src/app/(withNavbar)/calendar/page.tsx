@@ -8,7 +8,6 @@ import Button from "@/components/common/Button";
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date("2025-12-09"));
-  //console.log("selectedDate", selectedDate);
 
   return (
     <main className="bg-secondary-100 min-h-screen px-4 pt-6 pb-[calc(var(--spacing-navbar)+24px)]">

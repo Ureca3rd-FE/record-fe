@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 
 import { getTodosByDate } from "@/services/mockTodo";
 import type { Todo, TodoListProps } from "@/types/todo";
+import { cn } from "@/utils/cn";
 
 export default function TodoList({ date }: TodoListProps) {
   const [todos, setTodos] = useState<Todo[] | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
-      // console.log("fetch date", date);
       const result = await getTodosByDate(date);
       setTodos(result);
     };
@@ -28,7 +28,7 @@ export default function TodoList({ date }: TodoListProps) {
             <div key={todo.id} className="flex items-center justify-between p-4">
               <div className="flex flex-col">
                 <span className="text-sm text-gray-600">{todo.time}</span>
-                <span className={`${todo.complete ? "text-gray-400 line-through" : ""}`}>
+                <span className={cn(todo.complete && "text-gray-400 line-through")}>
                   {todo.content}
                 </span>
               </div>

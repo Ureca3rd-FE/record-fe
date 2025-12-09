@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import ChvLeft from "@/assets/chevronLeft.svg";
 import ChvRight from "@/assets/chevronRight.svg";
+import { cn } from "@/utils/cn";
 
 import { ko } from "date-fns/locale";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
@@ -27,7 +28,6 @@ export default function Calendar({
   selectedDate: Date;
   onSelectDate: (d: Date) => void;
 }) {
-  // const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const tempdiaryDates = ["2025-12-02", "2025-12-05", "2025-11-29"];
   const CustomHeader = ({
     date,
@@ -54,10 +54,8 @@ export default function Calendar({
   };
 
   const isSixWeekMonth = (date: Date) => {
-    const first = new Date(date.getFullYear(), date.getMonth(), 1).getDay(); // 첫날 요일
-    const last = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(); // 마지막 날짜
-
-    // (첫 주에서 차지하는 빈칸 + 전체 일수) / 7
+    const first = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const last = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     const weeks = Math.ceil((first + last) / 7);
 
     return weeks === 6;
@@ -84,7 +82,6 @@ export default function Calendar({
         }}
         onMonthChange={(d) => {
           if (d === null) return;
-          //console.log("trigger", d);
           const firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
           onSelectDate(firstDay);
         }}
@@ -105,7 +102,7 @@ export default function Calendar({
             <div className="flex flex-col items-center">
               <span>{d}</span>
               {/* 공통 하단 공간 */}
-              <span className={`m-4 flex ${isSixWeeks ? "h-1" : "h-3"} text-sm`}>
+              <span className={cn("m-4 flex text-sm", isSixWeeks ? "h-1" : "h-3")}>
                 {tempdiaryDates.includes(toYMD(dateObj)) ? "🎉" : ""}
               </span>
             </div>
