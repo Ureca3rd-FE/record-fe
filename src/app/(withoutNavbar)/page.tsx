@@ -1,4 +1,4 @@
-import StartButtons from "@/components/main/start-buttons";
+import StartButtons from "@/components/main/StartButtons";
 
 export default function Main() {
   return (
