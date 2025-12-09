@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Calendar from "@/assets/calendar-days.svg";
-import Home from "@/assets/circle-user.svg";
+import Calendar from "@/assets/calendarDays.svg";
+import Home from "@/assets/circleUser.svg";
 import House from "@/assets/house.svg";
 
 export default function Navbar() {
