@@ -8,7 +8,7 @@ import NotebookIcon from "@/assets/notebook.svg";
 import Profile from "@/assets/profile.svg";
 import StatisticsIcon from "@/assets/statistics.svg";
 import Navbar from "@/components/common/Navbar";
-import BigButton from "@/components/myPage/BigButton";
+import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
 
 export default function MyPage() {
@@ -73,8 +73,8 @@ export default function MyPage() {
 
         {/* 큰 버튼 2개 */}
         <div className="mt-8 mb-2 grid grid-cols-2 gap-4">
-          <BigButton icon={<StatisticsIcon className="size-8" />} label="통계 보러가기" />
-          <BigButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
+          <ActionInnerButton icon={<StatisticsIcon className="size-8" />} label="통계 보러가기" />
+          <ActionInnerButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
         </div>
       </div>
 
