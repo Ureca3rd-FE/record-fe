@@ -2,9 +2,11 @@
 
 @theme inline {
   --spacing-mobile: 480px;
+  --spacing-navbar: 64px;
 
   --font-pretendard: var(--font-pretendard);
   --font-kotra-hope: var(--font-kotra-hope);
+  --font-gowun-dodum: var(--font-gowun-dodum);
 
   --color-primary-100: #a78668;
   --color-primary-200: #83402e;
@@ -27,6 +29,10 @@
   button {
     @apply cursor-pointer disabled:cursor-not-allowed;
   }
+
+  input[type="text"] {
+    @apply placeholder:text-[#D3D3D3];
+  }
 }
 
 @utility bg-gradient {
@@ -35,4 +41,28 @@
 
 .embla__slide {
   flex: 0 0 100%;
+}
+.react-datepicker__header {
+  @apply !border-b-0 !bg-white/0;
+}
+/* 요일 밑에 선이 오게 변경 */
+.react-datepicker__day-names {
+  @apply !border-primary-200 !mb-1 !border-b;
+}
+/* 요일 글자색 변경 */
+.react-datepicker__day-name {
+  @apply !text-primary-200 !h-8 !w-12;
+}
+.react-datepicker__day--outside-month {
+  @apply !pointer-events-none !invisible;
+}
+.selected-day {
+  @apply !bg-primary-200 !rounded-full;
+}
+/* 기본적으로 뜨는 선택칸 css배경색 변경 */
+.react-datepicker__day--keyboard-selected {
+  @apply !bg-white;
+}
+.react-datepicker {
+  @apply !font-pretendard !text-base;
 }

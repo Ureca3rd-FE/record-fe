@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import GoogleIcon from "@/assets/google.svg";
 import Button from "@/components/common/Button";
 
+const baseurl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const googleLoginUrl = `${baseurl}/oauth2/authorization/google`;
+
 export default function StartButtons() {
   const router = useRouter();
 
   const onGoogleLogin = () => {
-    // TODO: Google 로그인 API 연결
-    // 백엔드 base url + /oauth2/authorization/google로 router.push 하기
+    router.push(googleLoginUrl);
   };
 
   return (
