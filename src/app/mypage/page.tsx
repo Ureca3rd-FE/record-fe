@@ -10,13 +10,15 @@ import StatisticsIcon from "@/assets/statistics.svg";
 import Navbar from "@/components/common/Navbar";
 import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
+import { useMyInfo } from "@/hooks/useMyInfo";
 
 export default function MyPage() {
+  const { data, isLoading, error } = useMyInfo();
   return (
     <div className="min-h-screen bg-[#f3e5d0] pb-28">
-      {/* 상단 갈색 섹션 */}
+      {/* 상단 갈색  */}
       <div className="from-primary-200 rounded-b-[40px] bg-linear-[225deg] to-[#B79182] px-6 pt-10 pb-10 text-white shadow-md">
-        {/* 로고 — left top */}
+        {/* 로고 */}
         <div className="mb-6">
           <Logo className="h-auto w-20" />
         </div>
@@ -24,9 +26,11 @@ export default function MyPage() {
         {/* 프로필 카드 */}
         <div className="mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4 shadow backdrop-blur-sm">
           <div className="flex flex-col">
-            <p className="text-lg font-bold text-white">광수링</p>
+            <p className="text-lg font-bold text-white">
+              {isLoading ? "로딩 중 ... " : data?.nickname}
+            </p>
             <p className="mt-1 rounded bg-white/20 px-2 py-0.5 text-sm text-white">
-              gangswooring@gmail.com
+              {isLoading ? "로딩 중 ... " : data?.email}
             </p>
           </div>
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white">
