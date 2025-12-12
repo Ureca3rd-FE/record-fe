@@ -28,10 +28,10 @@ export default function MyPage() {
         <div className="mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4 shadow backdrop-blur-sm">
           <div className="flex flex-col">
             <p className="text-lg font-bold text-white">
-              {isLoading ? "로딩중..." : data?.nickname}
+              {isLoading ? "로딩중..." : data?.result.nickname}
             </p>
             <p className="mt-1 rounded bg-white/20 px-2 py-0.5 text-sm text-white">
-              {isLoading ? "로딩중..." : data?.email}
+              {isLoading ? "로딩중..." : data?.result.email}
             </p>
           </div>
 
