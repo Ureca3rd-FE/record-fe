@@ -1,35 +1,36 @@
 "use client";
+import { useState } from "react";
 
-import { useEffect, useState } from "react";
-
-import { getTodosByDate } from "@/services/mockTodo";
-import type { Todo, TodoListProps } from "@/types/todo";
+import { useDailyTodos } from "@/lib/tanstack/query/todo";
 import { cn } from "@/utils/cn";
 
-export default function TodoList({ date }: TodoListProps) {
-  const [todos, setTodos] = useState<Todo[] | null>(null);
+import { format } from "date-fns";
 
-  useEffect(() => {
-    const fetch = async () => {
-      const result = await getTodosByDate(date);
-      setTodos(result);
-    };
-    fetch();
-  }, [date]);
+export default function TodoList({ selectedDate }: { selectedDate: Date }) {
+  const dayKey = format(selectedDate, "yyyy-MM-dd");
 
-  if (!todos) return <p className="font-pretendard p-4 text-sm">Loading...</p>;
+  const { data: dailyTodo, isSuccess: isDailySuccess } = useDailyTodos(dayKey);
+  if (isDailySuccess) {
+    console.log("[오늘의 Todo 내용]", dailyTodo.todosContent);
+    console.log("[오늘의 Todo 완료상태]", dailyTodo.todosComplete);
+  }
+
+  if (!dailyTodo) return <p className="font-pretendard p-4 text-sm">Loading...</p>;
+  const todosContent = dailyTodo.todosContent;
+  const todosComplete = dailyTodo.todosComplete;
 
   return (
     <div className="font-pretendard ml-7">
       <div className="h-full">
-        {todos.length === 0 && <p className="p-4 pb-25 text-sm text-gray-500">할 일이 없습니다.</p>}
+        {todosComplete.length === 0 && (
+          <p className="p-4 pb-25 text-sm text-gray-500">할 일이 없습니다.</p>
+        )}
         <div>
-          {todos.map((todo) => (
-            <div key={todo.id} className="flex items-center justify-between p-4">
+          {todosContent.map((content, idx) => (
+            <div key={idx} className="flex items-center justify-between p-4">
               <div className="flex flex-col">
-                <span className="text-sm text-gray-600">{todo.time}</span>
-                <span className={cn(todo.complete && "text-gray-400 line-through")}>
-                  {todo.content}
+                <span className={cn(todosComplete[idx] && "text-gray-400 line-through")}>
+                  {content}
                 </span>
               </div>
             </div>

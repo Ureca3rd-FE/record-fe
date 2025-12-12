@@ -12,22 +12,16 @@ import { format } from "date-fns";
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [shouldFetch, setShouldFetch] = useState(false);
-  const [writtenDiaryDates, setWrittenDiaryDates] = useState<string[]>([]);
-  const { data: monthlyData, isSuccess: isMonthlySuccess } = useMonthlyDiaries(
-    format(selectedDate, "yyyy-MM")
-  );
+  const monthKey = format(selectedDate, "yyyy-MM");
+  const dayKey = format(selectedDate, "yyyy-MM-dd");
+
+  const { data: monthlyData, isSuccess: isMonthlySuccess } = useMonthlyDiaries(monthKey);
   if (isMonthlySuccess) {
     console.log("[월별 조회 날짜들]", monthlyData.writtenDates);
     console.log("[월별 조회 감정 점수들]", monthlyData.writtenEmotions);
-    Promise.resolve().then(() => {
-      setWrittenDiaryDates(monthlyData.writtenDates);
-    });
   }
 
-  const { data: dailyDiary, isSuccess: isDailySuccess } = useDailyDiary(
-    format(selectedDate, "yyyy-MM-dd"),
-    shouldFetch
-  );
+  const { data: dailyDiary, isSuccess: isDailySuccess } = useDailyDiary(dayKey, shouldFetch);
   if (isDailySuccess) {
     console.log("[일별 조회 결과]", dailyDiary);
     Promise.resolve().then(() => setShouldFetch(false));
@@ -45,9 +39,9 @@ export default function CalendarPage() {
         <Calendar
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
-          writtenDiaryDates={writtenDiaryDates}
+          writtenDiaryDates={monthlyData?.writtenDates ?? []}
         />
-        <TodoList date={selectedDate} />
+        <TodoList selectedDate={selectedDate} />
         <Button className="mt-6 rounded-xl py-4" onClick={handleReadDiary}>
           일기 보기
         </Button>

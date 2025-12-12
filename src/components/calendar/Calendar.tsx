@@ -71,7 +71,6 @@ export default function Calendar({
         selected={selectedDate}
         onChange={(d) => {
           if (d === null) return;
-
           onSelectDate(d);
         }}
         onMonthChange={(d) => {
