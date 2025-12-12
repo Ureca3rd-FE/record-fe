@@ -10,8 +10,11 @@ import StatisticsIcon from "@/assets/statistics.svg";
 import Navbar from "@/components/common/Navbar";
 import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
+import { useMyInfo } from "@/lib/tanstack/query/user";
 
 export default function MyPage() {
+  const { data, isLoading, error } = useMyInfo();
+
   return (
     <div className="min-h-screen bg-[#f3e5d0] pb-28">
       {/* 상단 갈색 섹션 */}
@@ -24,11 +27,14 @@ export default function MyPage() {
         {/* 프로필 카드 */}
         <div className="mb-6 flex items-center justify-between rounded-2xl bg-white/20 p-4 shadow backdrop-blur-sm">
           <div className="flex flex-col">
-            <p className="text-lg font-bold text-white">광수링</p>
+            <p className="text-lg font-bold text-white">
+              {isLoading ? "로딩중..." : data?.result.nickname}
+            </p>
             <p className="mt-1 rounded bg-white/20 px-2 py-0.5 text-sm text-white">
-              gangswooring@gmail.com
+              {isLoading ? "로딩중..." : data?.result.email}
             </p>
           </div>
+
           <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white">
             <Profile className="h-12 w-12" />
           </div>
@@ -40,17 +46,9 @@ export default function MyPage() {
 
         {/* 작은 카드 3개 */}
         <div className="flex justify-center gap-4">
-          <MyInfoManageButton
-            icon={<NotebookIcon className="size-4" />}
-            label="작성한 일기"
-            count={3}
-          />
-          <MyInfoManageButton
-            icon={<FollowingIcon className="size-4" />}
-            label="팔로잉"
-            count={5}
-          />
-          <MyInfoManageButton icon={<FollowIcon className="size-4" />} label="팔로우" count={3} />
+          <MyInfoManageButton icon={<NotebookIcon className="size-4" />} label="작성한 일기" />
+          <MyInfoManageButton icon={<FollowingIcon className="size-4" />} label="팔로잉" />
+          <MyInfoManageButton icon={<FollowIcon className="size-4" />} label="팔로우" />
         </div>
       </div>
 
