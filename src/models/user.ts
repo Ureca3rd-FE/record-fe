@@ -2,7 +2,7 @@ export interface CheckNicknameResponseDTO {
   isDuplicated: boolean;
 }
 
-export interface MyInfo {
+export interface MyInfoDto {
   email: string;
   nickname: string;
 }

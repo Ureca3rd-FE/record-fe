@@ -46,17 +46,9 @@ export default function MyPage() {
 
         {/* 작은 카드 3개 */}
         <div className="flex justify-center gap-4">
-          <MyInfoManageButton
-            icon={<NotebookIcon className="size-4" />}
-            label="작성한 일기"
-            count={3}
-          />
-          <MyInfoManageButton
-            icon={<FollowingIcon className="size-4" />}
-            label="팔로잉"
-            count={5}
-          />
-          <MyInfoManageButton icon={<FollowIcon className="size-4" />} label="팔로우" count={3} />
+          <MyInfoManageButton icon={<NotebookIcon className="size-4" />} label="작성한 일기" />
+          <MyInfoManageButton icon={<FollowingIcon className="size-4" />} label="팔로잉" />
+          <MyInfoManageButton icon={<FollowIcon className="size-4" />} label="팔로우" />
         </div>
       </div>
 

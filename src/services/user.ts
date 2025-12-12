@@ -1,6 +1,6 @@
 import api from "@/lib/axios";
 import type { BaseResponseDTO } from "@/models/base";
-import type { CheckNicknameResponseDTO, MyInfo } from "@/models/user";
+import type { CheckNicknameResponseDTO, MyInfoDto } from "@/models/user";
 
 export const checkNickname = async (
   nickname: string
@@ -14,7 +14,7 @@ export const updateUserNickname = async (nickname: string): Promise<BaseResponse
   return data;
 };
 
-export const getMyInfo = async (): Promise<BaseResponseDTO<MyInfo>> => {
+export const getMyInfo = async (): Promise<BaseResponseDTO<MyInfoDto>> => {
   const { data } = await api.get("/users/me");
   return data;
 };
