@@ -27,7 +27,7 @@ export const updateTodoComplete = async (
   return data;
 };
 
-export const degeleTodo = async (id: number): Promise<BaseResponseDTO<void>> => {
-  const { data } = await api.delete(`/todos/?id=${id}`);
+export const deleteTodo = async (id: number): Promise<BaseResponseDTO<void>> => {
+  const { data } = await api.delete(`/todos/${id}`);
   return data;
 };

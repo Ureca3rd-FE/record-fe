@@ -7,14 +7,13 @@ export const useDailyTodos = (date: string) => {
     queryFn: () => getDailyTodos(date),
     enabled: !!date,
     select: (data) => {
-      const idx: number[] = data?.result?.map((item) => item.id) ?? [];
-      const todosContent: string[] = data?.result?.map((item) => item.content) ?? [];
-      const todosComplete: boolean[] = data?.result?.map((item) => item.complete) ?? [];
-      return {
-        todosContent,
-        todosComplete,
-        idx,
-      };
+      return (
+        data?.result?.map((item) => ({
+          id: item.id,
+          content: item.content,
+          complete: item.complete,
+        })) ?? []
+      );
     },
   });
 };

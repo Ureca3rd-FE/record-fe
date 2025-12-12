@@ -1,6 +1,6 @@
 import type { BaseResponseDTO } from "@/models/base";
 import type { CreateTodoDTO, UpdateTodoCompleteDTO, UpdateTodoDTO } from "@/models/todo";
-import { createTodo, degeleTodo, updateTodo, updateTodoComplete } from "@/services/todo";
+import { createTodo, deleteTodo, updateTodo, updateTodoComplete } from "@/services/todo";
 import type { UseMutationOptions } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 
@@ -36,7 +36,7 @@ export const useDeleteTodo = (
   options?: UseMutationOptions<BaseResponseDTO<void>, AxiosError, number>
 ) => {
   return useMutation({
-    mutationFn: degeleTodo,
+    mutationFn: deleteTodo,
     ...options,
   });
 };
