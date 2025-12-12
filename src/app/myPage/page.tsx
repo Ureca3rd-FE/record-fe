@@ -10,7 +10,7 @@ import StatisticsIcon from "@/assets/statistics.svg";
 import Navbar from "@/components/common/Navbar";
 import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
-import { useMyInfo } from "@/hooks/useMyInfo";
+import { useMyInfo } from "@/lib/tanstack/query/user";
 
 export default function MyPage() {
   const { data, isLoading, error } = useMyInfo();
