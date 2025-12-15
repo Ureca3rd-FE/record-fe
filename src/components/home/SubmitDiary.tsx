@@ -65,19 +65,17 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
     onError: () => {
       alert("일기 수정 중 오류가 발생했어요.");
     },
-    onSettled: () => {
-      setIsSummaryModalOpen(false);
-    },
   });
 
   const { mutate: submitDiary, isPending: isSubmittingDiary } = useSubmitDiary({
     onSuccess: (data) => {
       dispatch(setDiarySummary(data.result));
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", date] });
-      setIsSummaryModalOpen(false);
       router.push("/home/summary");
     },
     onError: (error) => {
+      setIsSummaryModalOpen(false);
+
       if (error.response?.status === UNAUTHORIZED_ERROR_STATUS) {
         setIsRequireLoginModalOpen(true);
         return;
