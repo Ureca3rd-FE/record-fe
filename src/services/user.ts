@@ -20,18 +20,15 @@ export const getMyInfo = async (): Promise<BaseResponseDTO<MyInfoDto>> => {
 };
 
 export const searchUsers = async (nickname: string): Promise<SearchUserDto[]> => {
-  const trimmed = nickname.trim();
-  if (!trimmed) return [];
-
   const { data } = await api.get("/users/search", {
     params: {
-      nickname: trimmed,
+      nickname,
       page: 0,
       size: 20,
     },
   });
 
-  const result = data?.result;
+  return data.result;
 
   if (Array.isArray(result)) {
     return result as SearchUserDto[];
