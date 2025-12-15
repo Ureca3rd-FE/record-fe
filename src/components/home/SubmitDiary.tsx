@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { queryClient } from "@/lib/tanstack";
 import { useSubmitDiary, useUpdateDiary } from "@/lib/tanstack/mutation/diary";
 import { useGetDiaryByDate } from "@/lib/tanstack/query/diary";
+import { setDiarySummary } from "@/store/slices/diarySlice";
+
+import { useDispatch } from "react-redux";
 
 import RequireLoginModal from "./RequireLoginModal";
 import SummaryModal from "./SummaryModal";
@@ -46,6 +50,10 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
 
   const { data: diaryByDate } = useGetDiaryByDate(date);
 
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
   const defaultAnswer = diaryByDate?.result?.answer || "";
   const defaultEmotion = diaryByDate?.result?.emotion || "";
 
@@ -64,8 +72,10 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
 
   const { mutate: submitDiary, isPending: isSubmittingDiary } = useSubmitDiary({
     onSuccess: (data) => {
+      dispatch(setDiarySummary(data.result));
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", date] });
       setIsSummaryModalOpen(false);
+      router.push("/home/summary");
     },
     onError: (error) => {
       if (error.response?.status === UNAUTHORIZED_ERROR_STATUS) {
@@ -96,7 +106,7 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
     }
 
     // 일기를 이미 작성한 경우 수정 요청
-    if (diaryByDate) {
+    if (diaryByDate && diaryByDate.result) {
       updateDiary({
         answer,
         emotion,
@@ -155,7 +165,7 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
         isOpen={isRequireLoginModalOpen}
         onClose={() => setIsRequireLoginModalOpen(false)}
       />
-      <SummaryModal isOpen={isSummaryModalOpen} onClose={() => setIsSummaryModalOpen(false)} />
+      <SummaryModal isOpen={isSummaryModalOpen} onClose={() => {}} />
     </>
   );
 }
