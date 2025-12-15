@@ -5,4 +5,5 @@ export interface CheckNicknameResponseDTO {
 export interface MyInfoDto {
   email: string;
   nickname: string;
+  createdAt: string;
 }

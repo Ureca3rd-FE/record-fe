@@ -27,7 +27,7 @@ export default async function Home() {
         </div>
         <p className="mt-5 text-center">{result.question}</p>
       </div>
-      <SubmitDiary />
+      <SubmitDiary date={today} questionId={result.id} />
     </main>
   );
 }
