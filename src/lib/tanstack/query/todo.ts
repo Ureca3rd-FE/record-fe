@@ -7,13 +7,7 @@ export const useDailyTodos = (date: string) => {
     queryFn: () => getDailyTodos(date),
     enabled: !!date,
     select: (data) => {
-      return (
-        data?.result?.map((item) => ({
-          id: item.id,
-          content: item.content,
-          complete: item.complete,
-        })) ?? []
-      );
+      return data?.result ?? [];
     },
   });
 };

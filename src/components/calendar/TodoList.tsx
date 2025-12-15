@@ -72,23 +72,24 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   const isToday = isSameDay(selectedDate, new Date());
   if (!dailyTodo) return <p className="font-pretendard p-4 text-sm">Loading...</p>;
 
+  const onSubmitTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const content = formData.get("newTodo");
+    if (typeof content !== "string" || !content.trim()) return;
+    createTodo({
+      content,
+      date: format(new Date(), "yyyy-MM-dd"),
+    });
+  };
+
   return (
     <div className="font-pretendard ml-7">
       <div className="h-full">
         {isToday && (
           <div className="flex items-center justify-between px-4 py-2">
-            <form
-              className="flex"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.currentTarget);
-                const content = formData.get("newTodo") as string;
-                createTodo({
-                  content,
-                  date: format(new Date(), "yyyy-MM-dd"),
-                });
-              }}
-            >
+            <form className="flex" onSubmit={onSubmitTodo}>
               <input
                 name="newTodo"
                 placeholder="할 일을 입력하세요"

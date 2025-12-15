@@ -5,19 +5,8 @@ export interface MonthlyDiaryDTO {
   emotion: number;
 }
 
-export interface DailyDiaryDTO {
-  id: number;
-  questionId: number;
+export interface DailyDiaryDTO extends MonthlyDiaryDTO {
   answer: string;
-  emotion: number;
-  date: string;
-}
-
-export interface MonthlyDiaryResponseDTO {
-  isSuccess: boolean;
-  code: number;
-  message: string;
-  result: MonthlyDiaryDTO[];
 }
 
 export type DailyDiaryResponseDTO = DailyDiaryDTO | null;

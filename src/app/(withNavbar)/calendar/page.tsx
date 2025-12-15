@@ -15,11 +15,10 @@ export default function CalendarPage() {
   const monthKey = format(selectedDate, "yyyy-MM");
   const dayKey = format(selectedDate, "yyyy-MM-dd");
 
-  const { data: monthlyData, isSuccess: isMonthlySuccess } = useMonthlyDiaries(monthKey);
-  if (isMonthlySuccess) {
-    console.log("[월별 조회 날짜들]", monthlyData.writtenDates);
-    console.log("[월별 조회 감정 점수들]", monthlyData.writtenEmotions);
-  }
+  const { data: monthlyData } = useMonthlyDiaries(monthKey);
+
+  console.log("[월별 조회 날짜들]", monthlyData?.writtenDates);
+  console.log("[월별 조회 감정 점수들]", monthlyData?.writtenEmotions);
 
   const { data: dailyDiary, isSuccess: isDailySuccess } = useDailyDiary(dayKey, shouldFetch);
   if (isDailySuccess) {

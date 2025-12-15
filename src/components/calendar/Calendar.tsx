@@ -14,15 +14,17 @@ import DatePicker from "react-datepicker";
 
 const writingImg = "/dalbam/writing.webp";
 
+interface CalendarProps {
+  selectedDate: Date;
+  onSelectDate: (d: Date) => void;
+  writtenDiaryDates: string[];
+}
+
 export default function Calendar({
   selectedDate,
   onSelectDate,
   writtenDiaryDates = [],
-}: {
-  selectedDate: Date;
-  onSelectDate: (d: Date) => void;
-  writtenDiaryDates?: string[];
-}) {
+}: CalendarProps) {
   const CustomHeader = ({
     date,
     decreaseMonth,
