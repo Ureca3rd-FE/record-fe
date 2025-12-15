@@ -1,9 +1,9 @@
 import { addFriend, removeFriend } from "@/services/follow";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+
+import { queryClient } from "..";
 
 export function useAddFriendMutation(myId: number) {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (targetId: number) => addFriend(myId, targetId),
     onSuccess: () => {
@@ -14,8 +14,6 @@ export function useAddFriendMutation(myId: number) {
 }
 
 export function useRemoveFriendMutation(myId: number) {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (targetId: number) => removeFriend(myId, targetId),
     onSuccess: () => {
