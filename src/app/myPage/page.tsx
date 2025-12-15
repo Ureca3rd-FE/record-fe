@@ -12,8 +12,8 @@ import Navbar from "@/components/common/Navbar";
 import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
 import { useAddFriendMutation, useRemoveFriendMutation } from "@/lib/tanstack/query/follow";
-import { useMyInfo } from "@/lib/tanstack/query/user";
-import { useSearchUsers } from "@/lib/tanstack/query/user";
+import { useMyInfo, useSearchUsers } from "@/lib/tanstack/query/user";
+import { cn } from "@/utils/cn";
 
 export default function MyPage() {
   const { data, isLoading } = useMyInfo();
@@ -25,7 +25,6 @@ export default function MyPage() {
 
   const addFriend = useAddFriendMutation(myId ?? 0);
   const removeFriend = useRemoveFriendMutation(myId ?? 0);
-  console.log("검색결과:", JSON.stringify(searchResults, null, 2));
 
   return (
     <div className="min-h-screen bg-[#f3e5d0] pb-28">
@@ -52,9 +51,8 @@ export default function MyPage() {
         </div>
 
         <p className="mb-1 text-sm opacity-90">내 정보 관리</p>
-        <div className="mb-4 h-[1px] w-full bg-white/40"></div>
+        <div className="mb-4 h-[1px] w-full bg-white/40" />
 
-        {/* 작은 카드 3개 */}
         <div className="flex justify-center gap-4">
           <MyInfoManageButton icon={<NotebookIcon className="size-4" />} label="작성한 일기" />
           <MyInfoManageButton icon={<FollowingIcon className="size-4" />} label="팔로잉" />
@@ -62,9 +60,8 @@ export default function MyPage() {
         </div>
       </div>
 
-      {/* ===== 아래 흰색 영역 ===== */}
+      {/* 하단 흰색 영역 */}
       <div className="mt-6 px-6">
-        {/* 친구 추가하기 카드 */}
         <div className="rounded-3xl bg-white p-6 shadow">
           <p className="text-primary-200 mb-4 font-semibold">친구 추가하기</p>
 
@@ -76,14 +73,12 @@ export default function MyPage() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
-
-            {/* 검색 아이콘 - 같은 아이콘을 찾지 못해서 일단은 대체 */}
             <span className="absolute top-1/2 right-4 -translate-y-1/2 text-lg text-[#a98c72]">
               🔍
             </span>
           </div>
 
-          {/* 검색 결과 영역 */}
+          {/* 검색 결과 */}
           {keyword.trim().length > 0 && (
             <div className="mt-4 border-t border-[#e5d5c3] pt-3">
               {searchResults?.length === 0 && (
@@ -91,7 +86,9 @@ export default function MyPage() {
               )}
 
               {searchResults?.map((user) => {
-                if (user.id === myId) return null; // 자기 자신은 목록에 안뜨게
+                if (user.id === myId) return null;
+
+                const isFollowed = user.isFollowed;
 
                 return (
                   <div
@@ -99,25 +96,21 @@ export default function MyPage() {
                     className="flex items-center justify-between border-b border-[#f0e7dd] px-2 py-3"
                   >
                     <div>
-                      <p className="font-bold text-[#5e3b28]">{user.nickname}</p>
+                      <p className="text-primary-200 font-bold">{user.nickname}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
 
-                    {user.isFollowed ? (
-                      <button
-                        onClick={() => removeFriend.mutate(user.id)}
-                        className="rounded-lg bg-[#c79c6c] px-4 py-1 text-sm text-white"
-                      >
-                        제거
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => addFriend.mutate(user.id)}
-                        className="rounded-lg bg-[#a05a3a] px-4 py-1 text-sm text-white"
-                      >
-                        추가
-                      </button>
-                    )}
+                    <button
+                      onClick={() =>
+                        isFollowed ? removeFriend.mutate(user.id) : addFriend.mutate(user.id)
+                      }
+                      className={cn(
+                        "rounded-lg px-4 py-1 text-sm text-white",
+                        isFollowed ? "bg-secondary-200" : "bg-primary-200"
+                      )}
+                    >
+                      {isFollowed ? "제거" : "추가"}
+                    </button>
                   </div>
                 );
               })}
@@ -125,7 +118,6 @@ export default function MyPage() {
           )}
         </div>
 
-        {/* 버튼 두 개 */}
         <div className="mt-8 mb-2 grid grid-cols-2 gap-4">
           <ActionInnerButton icon={<StatisticsIcon className="size-8" />} label="통계 보러가기" />
           <ActionInnerButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
