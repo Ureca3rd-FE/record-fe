@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 
 export const useCreateTodo = (
-  options?: UseMutationOptions<BaseResponseDTO<CreateTodoDTO>, AxiosError>
+  options?: UseMutationOptions<BaseResponseDTO<CreateTodoDTO>, AxiosError, CreateTodoDTO>
 ) => {
   return useMutation({
     mutationFn: createTodo,
@@ -15,14 +15,14 @@ export const useCreateTodo = (
   });
 };
 
-// export const useUpdateTodo = (
-//   options?: UseMutationOptions<BaseResponseDTO<UpdateTodoDTO>, AxiosError, number>
-// ) => {
-//   return useMutation({
-//     mutationFn: updateTodo,
-//     ...options,
-//   });
-// };
+export const useUpdateTodo = (
+  options?: UseMutationOptions<BaseResponseDTO<UpdateTodoDTO>, AxiosError, UpdateTodoDTO>
+) => {
+  return useMutation({
+    mutationFn: updateTodo,
+    ...options,
+  });
+};
 export const useUpdateTodoComplete = (
   options?: UseMutationOptions<BaseResponseDTO<UpdateTodoCompleteDTO>, AxiosError, number>
 ) => {
