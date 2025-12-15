@@ -4,6 +4,7 @@ import { useState } from "react";
 import Edit from "@/assets/pencil.svg";
 import Add from "@/assets/plus.svg";
 import Delete from "@/assets/trash.svg";
+import { queryClient } from "@/lib/tanstack";
 import {
   useCreateTodo,
   useDeleteTodo,
@@ -17,18 +18,17 @@ import { format, isSameDay } from "date-fns";
 
 export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   const dayKey = format(selectedDate, "yyyy-MM-dd");
-  const [newTodo, setNewTodo] = useState("");
   const [editTodo, setEditTodo] = useState<Record<number, string>>({});
 
-  const { data: dailyTodo, isSuccess: isDailySuccess, refetch } = useDailyTodos(dayKey);
-  if (isDailySuccess) {
-    console.log("[오늘의 Todo]", dailyTodo);
-  }
+  const { data: dailyTodo } = useDailyTodos(dayKey);
+
+  console.log("[오늘의 Todo]", dailyTodo);
+
   const { mutate: deleteTodo } = useDeleteTodo({
     onSuccess: () => {
       console.log("Todo 삭제 성공");
       alert("Todo 삭제 되었습니다.");
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
     onError: (error) => {
       alert("Todo 삭제 요청에 실패했어요.");
@@ -37,7 +37,7 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   });
   const { mutate: updateCompeleteTodo } = useUpdateTodoComplete({
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
     onError: (error) => {
       alert("Todo 삭제 요청에 실패했어요.");
@@ -47,8 +47,7 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   const { mutate: createTodo } = useCreateTodo({
     onSuccess: () => {
       console.log("Todo 생성 성공");
-      setNewTodo("");
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
     onError: (error) => {
       console.log(error);
@@ -58,7 +57,7 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   const { mutate: updateTodo } = useUpdateTodo({
     onSuccess: () => {
       console.log("Todo 수정 성공");
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
     onError: (error) => {
       console.log(error);
@@ -78,25 +77,30 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
       <div className="h-full">
         {isToday && (
           <div className="flex items-center justify-between px-4 py-2">
-            <div className="flex">
+            <form
+              className="flex"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const content = formData.get("newTodo") as string;
+                createTodo({
+                  content,
+                  date: format(new Date(), "yyyy-MM-dd"),
+                });
+              }}
+            >
               <input
-                value={newTodo}
-                onChange={(e) => setNewTodo(e.target.value)}
+                name="newTodo"
                 placeholder="할 일을 입력하세요"
                 className="border-primary-100 text-primary-200 ml-10 flex-1 rounded-[20px] border-2 p-1 pl-3 text-sm outline-none"
               />
               <button
+                type="submit"
                 className="bg-primary-100 ml-12 rounded-[20px] border-2 p-1 text-xs text-white"
-                onClick={() =>
-                  createTodo({
-                    content: newTodo,
-                    date: format(new Date(), "yyyy-MM-dd"),
-                  })
-                }
               >
                 <Add />
               </button>
-            </div>
+            </form>
           </div>
         )}
         {dailyTodo.length === 0 && (
