@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 
+import Edit from "@/assets/pencil.svg";
+import Add from "@/assets/plus.svg";
+import Delete from "@/assets/trash.svg";
 import {
   useCreateTodo,
   useDeleteTodo,
@@ -80,10 +83,10 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
                 value={newTodo}
                 onChange={(e) => setNewTodo(e.target.value)}
                 placeholder="할 일을 입력하세요"
-                className="flex-1 rounded-lg border p-1 text-sm outline-none"
+                className="border-primary-100 text-primary-200 ml-10 flex-1 rounded-[20px] border-2 p-1 pl-3 text-sm outline-none"
               />
               <button
-                className="bg-primary-200 ml-10 rounded-[20px] border-2 px-1 text-xs text-white"
+                className="bg-primary-100 ml-12 rounded-[20px] border-2 p-1 text-xs text-white"
                 onClick={() =>
                   createTodo({
                     content: newTodo,
@@ -91,7 +94,7 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
                   })
                 }
               >
-                생성
+                <Add />
               </button>
             </div>
           </div>
@@ -99,26 +102,24 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
         {dailyTodo.length === 0 && (
           <p className="p-4 pb-25 text-sm text-gray-500">할 일이 없습니다.</p>
         )}
-        <div>
+        <div className="max-h-24 overflow-y-auto">
           {dailyTodo.map((todo) => (
             <div key={todo.id} className="flex items-center justify-between px-4 py-2">
               <div className="flex">
+                <button
+                  className="border-primary-100 mt-1 ml-3 h-5 w-5 rounded-full border-2"
+                  onClick={() => updateCompeleteTodo(todo.id)}
+                ></button>
                 <input
                   value={editTodo[todo.id] ?? todo.content}
                   onChange={(e) => onEditChange(todo.id, e.target.value)}
                   className={cn(
-                    "flex-1 p-1 text-sm outline-none",
-                    todo.complete && "bg-gray-100 text-gray-400 line-through"
+                    "text-primary-300 ml-3 flex-1 p-1 text-sm outline-none",
+                    todo.complete && "text-gray-400 line-through"
                   )}
                 />
                 <button
-                  className="bg-secondary-100 ml-10 rounded-[20px] border-2 px-1 text-xs text-red-500"
-                  onClick={() => deleteTodo(todo.id)}
-                >
-                  삭제
-                </button>
-                <button
-                  className="bg-secondary-100 ml-3 rounded-[20px] border-2 px-1 text-xs"
+                  className="ml-3 px-1"
                   onClick={() =>
                     updateTodo({
                       id: todo.id,
@@ -127,13 +128,10 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
                     })
                   }
                 >
-                  수정
+                  <Edit />
                 </button>
-                <button
-                  className="bg-secondary-100 ml-3 rounded-[20px] border-2 px-1 text-xs text-red-500"
-                  onClick={() => updateCompeleteTodo(todo.id)}
-                >
-                  완료
+                <button className="ml-3 px-1 text-red-500" onClick={() => deleteTodo(todo.id)}>
+                  <Delete />
                 </button>
               </div>
             </div>
