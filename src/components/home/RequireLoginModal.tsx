@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 import { Modal, ModalConfirmButton, ModalContent, ModalHeader } from "../common/Modal";
 
 interface RequireLoginModalProps {
@@ -5,9 +7,14 @@ interface RequireLoginModalProps {
   onClose: () => void;
 }
 
+const baseurl = process.env.NEXT_PUBLIC_API_BASE_URL;
+const googleLoginUrl = `${baseurl}/oauth2/authorization/google`;
+
 export default function RequireLoginModal({ isOpen, onClose }: RequireLoginModalProps) {
+  const router = useRouter();
+
   const onLogin = () => {
-    // TODO: 로그인 API 연동
+    router.push(googleLoginUrl);
   };
 
   return (
