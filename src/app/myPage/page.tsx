@@ -21,7 +21,8 @@ export default function MyPage() {
 
   const [keyword, setKeyword] = useState("");
 
-  const { data: searchResults } = useSearchUsers(keyword);
+  const trimmedKeyword = keyword.trim();
+  const { data: searchResults } = useSearchUsers(trimmedKeyword);
 
   const addFriend = useAddFriendMutation(myId ?? 0);
   const removeFriend = useRemoveFriendMutation(myId ?? 0);

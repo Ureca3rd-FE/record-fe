@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { BaseResponseDTO } from "@/models/base";
+import type { BaseResponseDTO } from "@/models/base";
 
 export const addFriend = async (myId: number, targetId: number): Promise<BaseResponseDTO<void>> => {
   const { data } = await api.post(`/follows`, null, {
