@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
+
 import FollowIcon from "@/assets/follow.svg";
 import FollowingIcon from "@/assets/following.svg";
-import FriendImage from "@/assets/friendImage.svg";
 import Logo from "@/assets/logo.svg";
 import NotebookIcon from "@/assets/notebook.svg";
 import Profile from "@/assets/profile.svg";
@@ -10,16 +11,26 @@ import StatisticsIcon from "@/assets/statistics.svg";
 import Navbar from "@/components/common/Navbar";
 import ActionInnerButton from "@/components/myPage/ActionInnerButton";
 import MyInfoManageButton from "@/components/myPage/MyInfoManageButton";
+import { useAddFriendMutation, useRemoveFriendMutation } from "@/lib/tanstack/query/follow";
 import { useMyInfo } from "@/lib/tanstack/query/user";
+import { useSearchUsers } from "@/lib/tanstack/query/user";
 
 export default function MyPage() {
-  const { data, isLoading, error } = useMyInfo();
+  const { data, isLoading } = useMyInfo();
+  const myId = data?.result.userId ?? null;
+
+  const [keyword, setKeyword] = useState("");
+
+  const { data: searchResults } = useSearchUsers(keyword);
+
+  const addFriend = useAddFriendMutation(myId ?? 0);
+  const removeFriend = useRemoveFriendMutation(myId ?? 0);
+  console.log("검색결과:", JSON.stringify(searchResults, null, 2));
 
   return (
     <div className="min-h-screen bg-[#f3e5d0] pb-28">
-      {/* 상단 갈색 섹션 */}
+      {/* 상단 갈색 영역 */}
       <div className="from-primary-200 rounded-b-[40px] bg-linear-[225deg] to-[#B79182] px-6 pt-10 pb-10 text-white shadow-md">
-        {/* 로고 — left top */}
         <div className="mb-6">
           <Logo className="h-auto w-20" />
         </div>
@@ -40,7 +51,6 @@ export default function MyPage() {
           </div>
         </div>
 
-        {/* "내 정보 관리" */}
         <p className="mb-1 text-sm opacity-90">내 정보 관리</p>
         <div className="mb-4 h-[1px] w-full bg-white/40"></div>
 
@@ -52,24 +62,70 @@ export default function MyPage() {
         </div>
       </div>
 
-      {/* 아래 흰색 영역 */}
+      {/* ===== 아래 흰색 영역 ===== */}
       <div className="mt-6 px-6">
-        {/* 친구 초대하기 */}
+        {/* 친구 추가하기 카드 */}
         <div className="rounded-3xl bg-white p-6 shadow">
-          <p className="text-primary-200 mb-4 font-semibold">친구 초대하기</p>
+          <p className="text-primary-200 mb-4 font-semibold">친구 추가하기</p>
 
-          <input
-            className="border-primary-200 w-full rounded-xl border p-3"
-            placeholder="닉네임 검색하기"
-          />
+          {/* 검색창 */}
+          <div className="relative">
+            <input
+              className="w-full rounded-xl border border-[#c9a98a] p-3 pr-10"
+              placeholder="닉네임 검색하기"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
 
-          <p className="text-primary-200 mt-3 flex items-center justify-center gap-2 text-sm">
-            <FriendImage className="h-10 w-10" />
-            <span>친구 추가는 친구가 가입한 id를 작성하면 찾을 수 있어!</span>
-          </p>
+            {/* 검색 아이콘 - 같은 아이콘을 찾지 못해서 일단은 대체 */}
+            <span className="absolute top-1/2 right-4 -translate-y-1/2 text-lg text-[#a98c72]">
+              🔍
+            </span>
+          </div>
+
+          {/* 검색 결과 영역 */}
+          {keyword.trim().length > 0 && (
+            <div className="mt-4 border-t border-[#e5d5c3] pt-3">
+              {searchResults?.length === 0 && (
+                <p className="py-3 text-center text-sm text-gray-500">검색 결과가 없습니다.</p>
+              )}
+
+              {searchResults?.map((user) => {
+                if (user.id === myId) return null; // 자기 자신은 목록에 안뜨게
+
+                return (
+                  <div
+                    key={user.id}
+                    className="flex items-center justify-between border-b border-[#f0e7dd] px-2 py-3"
+                  >
+                    <div>
+                      <p className="font-bold text-[#5e3b28]">{user.nickname}</p>
+                      <p className="text-sm text-gray-500">{user.email}</p>
+                    </div>
+
+                    {user.isFollowed ? (
+                      <button
+                        onClick={() => removeFriend.mutate(user.id)}
+                        className="rounded-lg bg-[#c79c6c] px-4 py-1 text-sm text-white"
+                      >
+                        제거
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => addFriend.mutate(user.id)}
+                        className="rounded-lg bg-[#a05a3a] px-4 py-1 text-sm text-white"
+                      >
+                        추가
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        {/* 큰 버튼 2개 */}
+        {/* 버튼 두 개 */}
         <div className="mt-8 mb-2 grid grid-cols-2 gap-4">
           <ActionInnerButton icon={<StatisticsIcon className="size-8" />} label="통계 보러가기" />
           <ActionInnerButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
