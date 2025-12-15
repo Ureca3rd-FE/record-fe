@@ -21,15 +21,14 @@ export default function MyPage() {
 
   const [keyword, setKeyword] = useState("");
 
-  const trimmedKeyword = keyword.trim();
-  const { data: searchResults } = useSearchUsers(trimmedKeyword);
+  const { data: searchResults = [] } = useSearchUsers(keyword);
 
   const addFriend = useAddFriendMutation(myId ?? 0);
   const removeFriend = useRemoveFriendMutation(myId ?? 0);
 
   return (
     <div className="min-h-screen bg-[#f3e5d0] pb-28">
-      {/* 상단 갈색 영역 */}
+      {/* 상단 영역 */}
       <div className="from-primary-200 rounded-b-[40px] bg-linear-[225deg] to-[#B79182] px-6 pt-10 pb-10 text-white shadow-md">
         <div className="mb-6">
           <Logo className="h-auto w-20" />
@@ -82,11 +81,11 @@ export default function MyPage() {
           {/* 검색 결과 */}
           {keyword.trim().length > 0 && (
             <div className="mt-4 border-t border-[#e5d5c3] pt-3">
-              {searchResults?.length === 0 && (
+              {searchResults.length === 0 && (
                 <p className="py-3 text-center text-sm text-gray-500">검색 결과가 없습니다.</p>
               )}
 
-              {searchResults?.map((user) => {
+              {searchResults.map((user) => {
                 if (user.id === myId) return null;
 
                 const isFollowed = user.isFollowed;
@@ -97,7 +96,7 @@ export default function MyPage() {
                     className="flex items-center justify-between border-b border-[#f0e7dd] px-2 py-3"
                   >
                     <div>
-                      <p className="text-primary-200 font-bold">{user.nickname}</p>
+                      <p className="font-bold text-[#5e3b28]">{user.nickname}</p>
                       <p className="text-sm text-gray-500">{user.email}</p>
                     </div>
 
@@ -107,7 +106,7 @@ export default function MyPage() {
                       }
                       className={cn(
                         "rounded-lg px-4 py-1 text-sm text-white",
-                        isFollowed ? "bg-secondary-200" : "bg-primary-200"
+                        isFollowed ? "bg-[#c79c6c]" : "bg-[#a05a3a]"
                       )}
                     >
                       {isFollowed ? "제거" : "추가"}
