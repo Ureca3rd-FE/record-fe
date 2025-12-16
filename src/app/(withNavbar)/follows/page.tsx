@@ -23,30 +23,39 @@ export default function Follow() {
           <ChevronLeft className="h-12 w-12" />
         </button>
 
-        <div className="text-primary-200 text-lg font-bold">광수링</div>
+        <div className="text-primary-200 fogitnt-bold text-lg">광수링</div>
         <div className="size-6" />
       </header>
 
       {/* 선 위 탭 */}
       <div className="flex border-b border-white/40">
-        <div
+        <button
+          type="button"
           onClick={() => setIsFollower(true)}
           className={cn(
-            "flex-1 cursor-pointer border-b-2 py-3 text-center font-semibold",
-            isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
+            "flex-1 py-3 text-center font-semibold",
+            "appearance-none bg-transparent",
+            isFollower
+              ? "border-primary-200 border-b-2 text-black"
+              : "text-primary-200/50 border-b-2 border-transparent"
           )}
         >
           팔로워
-        </div>
-        <div
+        </button>
+
+        <button
+          type="button"
           onClick={() => setIsFollower(false)}
           className={cn(
-            "flex-1 cursor-pointer border-b-2 py-3 text-center font-semibold",
-            !isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
+            "flex-1 py-3 text-center font-semibold",
+            "appearance-none bg-transparent",
+            !isFollower
+              ? "border-primary-200 border-b-2 text-black"
+              : "text-primary-200/50 border-b-2 border-transparent"
           )}
         >
           팔로잉
-        </div>
+        </button>
       </div>
 
       <div className="px-5 py-4 text-sm font-semibold text-black">
