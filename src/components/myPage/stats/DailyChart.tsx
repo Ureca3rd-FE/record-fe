@@ -150,27 +150,29 @@ export default function DailyChart({ selectedMonth }: DailyChartProps) {
         </div>
       </div>
 
-      <div
-        className={cn(
-          "flex items-center justify-center gap-4",
-          !isPositiveMonth && "flex-row-reverse"
-        )}
-      >
-        <p className="text-center">
-          이번 달은
-          <br />
-          <span className="text-xl font-semibold">
-            {isPositiveMonth ? "긍정적인 날" : "부정적인 날"}
-          </span>
-          이 많아요.
-        </p>
-        <Image
-          src={isPositiveMonth ? positiveDalbam : negativeDalbam}
-          alt="emotion dalbam"
-          width={100}
-          height={100}
-        />
-      </div>
+      {totalDiaryCount > 0 && (
+        <div
+          className={cn(
+            "flex items-center justify-center gap-4",
+            !isPositiveMonth && "flex-row-reverse"
+          )}
+        >
+          <p className="text-center">
+            이번 달은
+            <br />
+            <span className="text-xl font-semibold">
+              {isPositiveMonth ? "긍정적인 날" : "부정적인 날"}
+            </span>
+            이 많아요.
+          </p>
+          <Image
+            src={isPositiveMonth ? positiveDalbam : negativeDalbam}
+            alt="emotion dalbam"
+            width={100}
+            height={100}
+          />
+        </div>
+      )}
     </div>
   );
 }
