@@ -23,3 +23,8 @@ export const getDiaryByDate = async (date: string): Promise<BaseResponseDTO<Diar
   const { data } = await api.get(`/diaries/user/by-date?year-month-day=${date}`);
   return data;
 };
+
+export const deleteDiary = async (id: number): Promise<BaseResponseDTO<void>> => {
+  const { data } = await api.delete(`/diaries/${id}`);
+  return data;
+};

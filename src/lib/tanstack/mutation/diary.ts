@@ -4,7 +4,7 @@ import type {
   SubmitDiaryResponseDTO,
   UpdateDiaryRequestDTO,
 } from "@/models/diary";
-import { submitDiary, updateDiary } from "@/services/diary";
+import { deleteDiary, submitDiary, updateDiary } from "@/services/diary";
 import type { UseMutationOptions } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 
@@ -28,6 +28,15 @@ export const useUpdateDiary = (
 ) => {
   return useMutation({
     mutationFn: updateDiary,
+    ...options,
+  });
+};
+
+export const useDeleteDiary = (
+  options?: UseMutationOptions<BaseResponseDTO<void>, AxiosError, number>
+) => {
+  return useMutation({
+    mutationFn: deleteDiary,
     ...options,
   });
 };

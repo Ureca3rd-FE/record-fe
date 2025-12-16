@@ -18,11 +18,11 @@ export const useMonthlyDiaries = (yearMonth: string) => {
   });
 };
 
-export const useDailyDiary = (date: string, enabled: boolean) => {
+export const useDailyDiary = (date: string) => {
   return useQuery({
     queryKey: ["daily-diaries", date],
     queryFn: () => getDailyDiary(date),
-    enabled,
+
     select: (data) => data?.result,
   });
 };

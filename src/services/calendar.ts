@@ -15,4 +15,3 @@ export const getDailyDiary = async (
   const { data } = await api.get(`diaries/user/by-date?year-month-day=${date}`);
   return data;
 };
-//여기에 cn 사용 가능한지 질문하기
