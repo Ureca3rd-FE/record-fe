@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import ChevronLeft from "@/assets/chevronLeft.svg";
 import Profile from "@/assets/profile.svg";
+import CancleIcon from "@/assets/cancleIcon.svg";
 
 export default function Follow() {
   const [isFollower, setIsFollower] = useState(true);
@@ -51,7 +52,9 @@ export default function Follow() {
               </div>
               <span className="text-primary-200 text-[15px] font-bold">{name}</span>
             </div>
-            <div className="text-primary-200 text-xl font-bold"> x </div>
+            <div className="text-primary-200 font-bold">
+              <CancleIcon className="h-6 w-6" />
+            </div>
           </div>
         ))}
       </div>
