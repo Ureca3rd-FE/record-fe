@@ -7,7 +7,7 @@ interface WithAuthLayoutProps {
 
 export default async function WithAuthLayout({ children }: WithAuthLayoutProps) {
   const cookieStore = await cookies();
-  const isTokenExist = cookieStore.get("accessToken") !== undefined;
+  const isTokenExist = cookieStore.get("refreshToken") !== undefined;
 
   if (!isTokenExist) {
     return redirect("/", RedirectType.replace);
