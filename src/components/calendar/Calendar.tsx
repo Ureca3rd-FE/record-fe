@@ -1,34 +1,30 @@
 "use client";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useState } from "react";
 import Image from "next/image";
 
 import ChvLeft from "@/assets/chevronLeft.svg";
 import ChvRight from "@/assets/chevronRight.svg";
 import { cn } from "@/utils/cn";
 
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import type { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import DatePicker from "react-datepicker";
 
 const writingImg = "/dalbam/writing.webp";
 
-const toYMD = (date: Date) => {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-};
+interface CalendarProps {
+  selectedDate: Date;
+  onSelectDate: (d: Date) => void;
+  writtenDiaryDates: string[];
+}
 
 export default function Calendar({
   selectedDate,
   onSelectDate,
-}: {
-  selectedDate: Date;
-  onSelectDate: (d: Date) => void;
-}) {
-  const tempdiaryDates = ["2025-12-02", "2025-12-05", "2025-11-29"];
+  writtenDiaryDates = [],
+}: CalendarProps) {
   const CustomHeader = ({
     date,
     decreaseMonth,
@@ -77,7 +73,6 @@ export default function Calendar({
         selected={selectedDate}
         onChange={(d) => {
           if (d === null) return;
-
           onSelectDate(d);
         }}
         onMonthChange={(d) => {
@@ -103,7 +98,7 @@ export default function Calendar({
               <span>{d}</span>
               {/* 공통 하단 공간 */}
               <span className={cn("m-4 flex text-sm", isSixWeeks ? "h-1" : "h-3")}>
-                {tempdiaryDates.includes(toYMD(dateObj)) ? "🎉" : ""}
+                {writtenDiaryDates.includes(format(dateObj, "yyyy-MM-dd")) ? "🎉" : ""}
               </span>
             </div>
           );

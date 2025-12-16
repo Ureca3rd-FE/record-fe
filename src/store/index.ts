@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import appReducer from "./slices/appSlice";
+import diaryReducer from "./slices/diarySlice";
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
+    diary: diaryReducer,
   },
 });
 

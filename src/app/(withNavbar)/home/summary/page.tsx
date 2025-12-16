@@ -2,24 +2,26 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { redirect, RedirectType, useRouter } from "next/navigation";
 
 import BackIcon from "@/assets/chevronLeft.svg";
 import Button from "@/components/common/Button";
+import type { RootState } from "@/store";
 
+import DOMPurify from "dompurify";
 import download from "downloadjs";
 import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
 
 const runningDalbam = "/dalbam/running-line.webp";
-
-const positiveKeywords = ["행복", "즐거움", "좋은 일"];
-const negativeKeywords = ["힘듦", "우울", "피곤"];
 
 export default function DiarySummary() {
   const [isDownloading, setIsDownloading] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
+
+  const diarySummary = useSelector((state: RootState) => state.diary.diarySummary);
 
   const onDownload = async () => {
     if (!summaryRef.current) return;
@@ -40,6 +42,17 @@ export default function DiarySummary() {
       setIsDownloading(false);
     }
   };
+
+  if (diarySummary === null) {
+    return redirect("/home", RedirectType.replace);
+  }
+
+  const positiveKeywords =
+    diarySummary.positive.length > 0 ? diarySummary.positive.join(", ") : "-";
+  const negativeKeywords =
+    diarySummary.negative.length > 0 ? diarySummary.negative.join(", ") : "-";
+
+  const sanitizedSummary = DOMPurify.sanitize(diarySummary.summary);
 
   return (
     <main ref={summaryRef} className="font-kotra-hope pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
@@ -64,22 +77,20 @@ export default function DiarySummary() {
       <section className="my-12 space-y-5 px-4">
         <div>
           <p className="text-primary-200 text-lg">긍정 키워드</p>
-          <p className="text-primary-100 text-sm">{positiveKeywords.join(", ")}</p>
+          <p className="text-primary-100 text-sm">{positiveKeywords}</p>
         </div>
         <div>
           <p className="text-primary-200 text-lg">부정 키워드</p>
-          <p className="text-primary-100 text-sm">{negativeKeywords.join(", ")}</p>
+          <p className="text-primary-100 text-sm">{negativeKeywords}</p>
         </div>
       </section>
       <section className="px-4">
         <div className="space-y-1">
           <p className="text-primary-200 text-lg">요약</p>
-          <p className="bg-primary-100 font-gowun-dodum min-h-60 rounded-xl p-3 text-sm text-white">
-            오늘 하루는 마음이 따뜻해지는 순간들로 가득했네요. 좋아하는 노래와 즐거운 영화, 맛있는
-            저녁이 지친 마음을 살며시 감싸준 하루였어요. 최근의 어려움이 있었지만, 그 모든 무게를
-            잠시 내려놓고 웃을 수 있었던 시간이 되었길 바라요. 이런 소중한 순간들이 당신의 마음을
-            천천히 회복시켜 줄 거예요. 앞으로도 이렇게 작은 행복들이 계속 이어지기를 응원합니다.
-          </p>
+          <p
+            className="bg-primary-100 font-gowun-dodum min-h-60 rounded-xl p-3 text-sm text-white"
+            dangerouslySetInnerHTML={{ __html: sanitizedSummary }}
+          />
         </div>
         <Button className="mt-6 mb-3 rounded-xl py-4" onClick={onDownload} disabled={isDownloading}>
           {isDownloading ? "다운로드 중..." : "다운로드"}
