@@ -2,15 +2,20 @@
 
 import { useState } from "react";
 
+import CancleIcon from "@/assets/cancleIcon.svg";
 import ChevronLeft from "@/assets/chevronLeft.svg";
 import Profile from "@/assets/profile.svg";
-import CancleIcon from "@/assets/cancleIcon.svg";
 
 export default function Follow() {
   const [isFollower, setIsFollower] = useState(true);
 
   return (
-    <div className="bg-secondary-100 min-h-screen pb-28">
+    <div
+      className="bg-secondary-100 min-h-screen"
+      style={{
+        paddingBottom: "calc(var(--spacing-navbar) + 10px)",
+      }}
+    >
       {/* 헤더부분 */}
       <div className="relative p-4 pt-10">
         <button className="text-primary-200 absolute top-1/2 left-4 -translate-y-1/2 text-xl font-bold">
@@ -44,8 +49,8 @@ export default function Follow() {
       </div>
 
       <div className="px-5">
-        {["Subinnee_", "zoo2giyomi", "gangsoomiwae", "chainsowman", "ddongjooa"].map((name, i) => (
-          <div key={i} className="mb-4 flex items-center justify-between">
+        {["Subinnee_", "zoo2giyomi", "gangsoomiwae", "chainsowman", "ddongjooa"].map((name) => (
+          <div key={name} className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="border-primary-200 text-primary-200 flex h-[52px] w-[52px] items-center justify-center overflow-hidden rounded-full border bg-white">
                 <Profile className="h-12 w-12" />
