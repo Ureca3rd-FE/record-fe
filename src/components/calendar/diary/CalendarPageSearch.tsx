@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import BackIcon from "@/assets/chevronLeft.svg";
 import { queryClient } from "@/lib/tanstack";
 import { useDeleteDiary, useUpdateDiary } from "@/lib/tanstack/mutation/diary";
-import { useDailyDiary } from "@/lib/tanstack/query/calendar";
 import { useGetDiaryByDate } from "@/lib/tanstack/query/diary";
 
 import { format } from "date-fns";
@@ -14,34 +13,34 @@ interface CalendarPageSearchProps {
   selectedDate: string;
   question: string;
 }
-export default function CalendarPageSearch({ selectedDate, question }: CalendarPageSearchProps) {
-  const emotions = [
-    {
-      value: 1,
-      label: "😞 매우 나쁨",
-    },
-    {
-      value: 2,
-      label: "😟 나쁨",
-    },
-    {
-      value: 3,
-      label: "😐 보통",
-    },
-    {
-      value: 4,
-      label: "😊 좋음",
-    },
-    {
-      value: 5,
-      label: "😍 매우 좋음",
-    },
-  ];
+const emotions = [
+  {
+    value: 1,
+    label: "😞 매우 나쁨",
+  },
+  {
+    value: 2,
+    label: "😟 나쁨",
+  },
+  {
+    value: 3,
+    label: "😐 보통",
+  },
+  {
+    value: 4,
+    label: "😊 좋음",
+  },
+  {
+    value: 5,
+    label: "😍 매우 좋음",
+  },
+];
 
+export default function CalendarPageSearch({ selectedDate, question }: CalendarPageSearchProps) {
   const dayKey = format(selectedDate, "yyyy-MM-dd");
+  const monthKey = format(selectedDate, "yyyy-MM");
   const day = format(selectedDate, "yyyy.MM.dd");
-  const { data: dailyData } = useDailyDiary(dayKey);
-  const emotion = dailyData?.emotion;
+
   const surprisedDalbam = "/dalbam/surprised.webp";
   const router = useRouter();
 
@@ -62,6 +61,8 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     onSuccess: () => {
       alert("일기 삭제에 성공했어요.");
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", dayKey] });
+      queryClient.invalidateQueries({ queryKey: ["monthly-diaries", monthKey] });
+      router.back();
     },
     onError: () => {
       alert("일기 삭제 중 오류가 발생했어요.");
@@ -72,7 +73,6 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     const formData = new FormData(e.currentTarget);
     const answer = formData.get("answer");
     const emotion = formData.get("emotion");
-    const date = dayKey;
 
     if (typeof answer !== "string") return;
 
@@ -82,7 +82,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     if (emotion === null || typeof emotion !== "string") {
       return alert("감정을 선택해주세요.");
     }
-    updateDiary({ answer, emotion, date });
+    updateDiary({ answer, emotion, date: dayKey });
   };
 
   const onDeleteDiary = () => {
@@ -108,7 +108,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
         <div>
           <div className="mt-2 flex items-center justify-center text-xl">{question}</div>
           <div className="mt-2 flex items-center justify-center">
-            {emotions.find((e) => e.value === emotion)?.label ?? "😐 보통"}
+            {emotions.find((e) => e.value === defaultEmotion)?.label.split(" ")[0]}
           </div>
         </div>
         <form

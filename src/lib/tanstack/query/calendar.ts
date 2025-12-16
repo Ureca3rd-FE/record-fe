@@ -1,4 +1,4 @@
-import { getDailyDiary, getMonthlyDiaries } from "@/services/calendar";
+import { getMonthlyDiaries } from "@/services/calendar";
 import { useQuery } from "@tanstack/react-query";
 
 export const useMonthlyDiaries = (yearMonth: string) => {
@@ -15,14 +15,5 @@ export const useMonthlyDiaries = (yearMonth: string) => {
         writtenDates,
       };
     },
-  });
-};
-
-export const useDailyDiary = (date: string) => {
-  return useQuery({
-    queryKey: ["daily-diaries", date],
-    queryFn: () => getDailyDiary(date),
-
-    select: (data) => data?.result,
   });
 };
