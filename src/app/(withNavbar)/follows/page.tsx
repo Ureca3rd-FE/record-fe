@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import router from "next/router";
 
 import CancleIcon from "@/assets/cancleIcon.svg";
 import ChevronLeft from "@/assets/chevronLeft.svg";
@@ -19,8 +20,13 @@ export default function Follow() {
     >
       {/* 헤더부분 */}
       <header className="flex items-center justify-between px-4 pt-10">
-        <button className="text-primary-200" aria-label="뒤로가기">
-          <ChevronLeft className="h-12 w-12" />
+        <button
+          type="button"
+          className="text-primary-200"
+          aria-label="뒤로가기"
+          onClick={() => router.back()}
+        >
+          <ChevronLeft />
         </button>
 
         <div className="text-primary-200 fogitnt-bold text-lg">광수링</div>
