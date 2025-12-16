@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import FollowIcon from "@/assets/follow.svg";
 import FollowingIcon from "@/assets/following.svg";
@@ -20,7 +21,7 @@ export default function MyPage() {
   const myId = data?.result.userId ?? null;
 
   const [keyword, setKeyword] = useState("");
-
+  const router = useRouter();
   const { data: searchResults = [] } = useSearchUsers(keyword);
 
   const addFriend = useAddFriendMutation(myId ?? 0);
@@ -119,7 +120,11 @@ export default function MyPage() {
         </div>
 
         <div className="mt-8 mb-2 grid grid-cols-2 gap-4">
-          <ActionInnerButton icon={<StatisticsIcon className="size-8" />} label="통계 보러가기" />
+          <ActionInnerButton
+            icon={<StatisticsIcon className="size-8" />}
+            label="통계 보러가기"
+            onClick={() => router.push("/myPage/stats")}
+          />
           <ActionInnerButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
         </div>
       </div>

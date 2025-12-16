@@ -63,7 +63,7 @@ export default function Stats() {
       </section>
       <section className="space-y-2">
         <p className="text-xl">전체 통계</p>
-        <TotalChart />
+        <TotalChart selectedMonth={selectedMonth} />
       </section>
       <section className="space-y-2">
         <p className="text-xl">일별 통계</p>
