@@ -22,12 +22,13 @@ export default function TotalChart({ selectedMonth }: TotalChartProps) {
   const { data: emotionStatus } = useGetEmotionStatus(formattedMonth);
 
   const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
 
   const chartData = useMemo(() => {
     if (!emotionStatus) return null;
 
     return {
-      labels: ["긍정", "부정"],
+      labels: [`긍정 ${emotionStatus.positiveCount}`, `부정 ${emotionStatus.negativeCount}`],
       datasets: [
         {
           data: [emotionStatus.positiveCount, emotionStatus.negativeCount],
@@ -40,13 +41,17 @@ export default function TotalChart({ selectedMonth }: TotalChartProps) {
   useEffect(() => {
     if (!chartRef.current || !chartData) return;
 
-    const chart = new Chart(chartRef.current, {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
+    chartInstanceRef.current = new Chart(chartRef.current, {
       type: "pie",
       data: chartData,
     });
 
     return () => {
-      chart.destroy();
+      chartInstanceRef.current?.destroy();
     };
   }, [chartData]);
 
@@ -54,21 +59,5 @@ export default function TotalChart({ selectedMonth }: TotalChartProps) {
     return <p className="text-primary-100">해당 달에는 일기를 작성하지 않았어요.</p>;
   }
 
-  return (
-    <div className="space-y-2">
-      <canvas ref={chartRef} />
-      <div className="flex items-center justify-center gap-5">
-        <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full" style={{ backgroundColor: positiveColor }} />
-          <p>긍정</p>
-          <p>{emotionStatus.positiveCount}</p>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full" style={{ backgroundColor: negativeColor }} />
-          <p>부정</p>
-          <p>{emotionStatus.negativeCount}</p>
-        </div>
-      </div>
-    </div>
-  );
+  return <canvas ref={chartRef} />;
 }
