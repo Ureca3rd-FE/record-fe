@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
+import ChevronLeft from "@/assets/chevronLeft.svg";
 import Profile from "@/assets/profile.svg";
-import Navbar from "@/components/common/Navbar";
 
 export default function Follow() {
   const [isFollower, setIsFollower] = useState(true);
@@ -13,7 +13,7 @@ export default function Follow() {
       {/* 헤더부분 */}
       <div className="relative p-4 pt-10">
         <button className="text-primary-200 absolute top-1/2 left-4 -translate-y-1/2 text-xl font-bold">
-          {"<"}
+          <ChevronLeft className="h-12 w-12" />
         </button>
         <div className="text-primary-200 text-center text-lg font-bold">광수링</div>
       </div>
@@ -55,8 +55,6 @@ export default function Follow() {
           </div>
         ))}
       </div>
-
-      <Navbar />
     </div>
   );
 }
