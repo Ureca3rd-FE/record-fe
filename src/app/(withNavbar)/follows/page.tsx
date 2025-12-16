@@ -40,7 +40,6 @@ export default function Follow() {
           onClick={() => setIsFollower(true)}
           className={cn(
             "flex-1 py-3 text-center font-semibold",
-            "appearance-none bg-transparent",
             isFollower
               ? "border-primary-200 border-b-2 text-black"
               : "text-primary-200/50 border-b-2 border-transparent"
