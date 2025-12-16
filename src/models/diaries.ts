@@ -4,9 +4,3 @@ export interface MonthlyDiaryDTO {
   date: string;
   emotion: number;
 }
-
-export interface DailyDiaryDTO extends MonthlyDiaryDTO {
-  answer: string;
-}
-
-export type DailyDiaryResponseDTO = DailyDiaryDTO | null;

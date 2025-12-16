@@ -105,7 +105,7 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
           </div>
         )}
         {dailyTodo.length === 0 && (
-          <p className="p-4 pb-25 text-sm text-gray-500">할 일이 없습니다.</p>
+          <p className="p-4 pb-20 text-sm text-gray-500">할 일이 없습니다.</p>
         )}
         <div className="max-h-24 overflow-y-auto">
           {dailyTodo.map((todo) => (
