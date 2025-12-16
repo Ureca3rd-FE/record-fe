@@ -5,6 +5,7 @@ import { useState } from "react";
 import CancleIcon from "@/assets/cancleIcon.svg";
 import ChevronLeft from "@/assets/chevronLeft.svg";
 import Profile from "@/assets/profile.svg";
+import { cn } from "@/utils/cn";
 
 export default function Follow() {
   const [isFollower, setIsFollower] = useState(true);
@@ -28,17 +29,19 @@ export default function Follow() {
       <div className="flex border-b border-white/40">
         <div
           onClick={() => setIsFollower(true)}
-          className={`flex-1 cursor-pointer py-3 text-center font-semibold ${
-            isFollower ? "border-primary-200 border-b-2 text-black" : "text-primary-200/50"
-          }`}
+          className={cn(
+            "flex-1 cursor-pointer border-b-2 py-3 text-center font-semibold",
+            isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
+          )}
         >
           팔로워
         </div>
         <div
           onClick={() => setIsFollower(false)}
-          className={`flex-1 cursor-pointer py-3 text-center font-semibold ${
-            !isFollower ? "border-primary-200 border-b-2 text-black" : "text-primary-200/50"
-          }`}
+          className={cn(
+            "flex-1 cursor-pointer border-b-2 py-3 text-center font-semibold",
+            !isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
+          )}
         >
           팔로잉
         </div>
