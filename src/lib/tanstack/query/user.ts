@@ -10,18 +10,9 @@ export function useMyInfo() {
 }
 
 export function useSearchUsers(keyword: string) {
-  return useQuery({
+  return useQuery<SearchUserDto[]>({
     queryKey: ["userSearch", keyword],
     queryFn: () => searchUsers(keyword),
     enabled: keyword.trim().length >= 1,
-
-    // 🔥 핵심: UI에는 배열만 간다
-    select: (data) => {
-      if (Array.isArray(data)) return data;
-      return [];
-    },
-
-    // 초기에도 배열
-    initialData: [],
   });
 }

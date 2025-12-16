@@ -5,24 +5,21 @@ import type { CheckNicknameResponseDTO, MyInfoDto, SearchUserDto } from "@/model
 export const checkNickname = async (
   nickname: string
 ): Promise<BaseResponseDTO<CheckNicknameResponseDTO>> => {
-  const { data } = await api.get<BaseResponseDTO<CheckNicknameResponseDTO>>(
-    "/users/check-nickname",
-    {
-      params: { nickname },
-    }
-  );
+  const { data } = await api.get("/users/check-nickname", {
+    params: { nickname },
+  });
   return data;
 };
 
 export const updateUserNickname = async (nickname: string): Promise<BaseResponseDTO<void>> => {
-  const { data } = await api.put<BaseResponseDTO<void>>("/users/nickname", {
+  const { data } = await api.put("/users/nickname", {
     nickname,
   });
   return data;
 };
 
 export const getMyInfo = async (): Promise<BaseResponseDTO<MyInfoDto>> => {
-  const { data } = await api.get<BaseResponseDTO<MyInfoDto>>("/users/me");
+  const { data } = await api.get("/users/me");
   return data;
 };
 
