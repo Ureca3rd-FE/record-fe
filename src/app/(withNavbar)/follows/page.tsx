@@ -18,12 +18,14 @@ export default function Follow() {
       }}
     >
       {/* 헤더부분 */}
-      <div className="relative p-4 pt-10">
-        <button className="text-primary-200 absolute top-1/2 left-4 -translate-y-1/2 text-xl font-bold">
+      <header className="flex items-center justify-between px-4 pt-10">
+        <button className="text-primary-200" aria-label="뒤로가기">
           <ChevronLeft className="h-12 w-12" />
         </button>
-        <div className="text-primary-200 text-center text-lg font-bold">광수링</div>
-      </div>
+
+        <div className="text-primary-200 text-lg font-bold">광수링</div>
+        <div className="size-6" />
+      </header>
 
       {/* 선 위 탭 */}
       <div className="flex border-b border-white/40">
