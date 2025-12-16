@@ -11,7 +11,7 @@ export default function Navbar() {
   const navItems = [
     { href: "/", label: "홈", icon: <House /> },
     { href: "/calendar", label: "달력", icon: <Calendar /> },
-    { href: "/mypage", label: "마이페이지", icon: <Home /> },
+    { href: "/myPage", label: "마이페이지", icon: <Home /> },
   ];
   return (
     <nav className="max-w-mobile align-items-center bg-primary-200 fixed bottom-0 mx-auto flex w-full">
