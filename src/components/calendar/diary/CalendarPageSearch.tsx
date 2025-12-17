@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +10,9 @@ import { useDeleteDiary, useUpdateDiary } from "@/lib/tanstack/mutation/diary";
 import { useGetDiaryByDate } from "@/lib/tanstack/query/diary";
 
 import { format } from "date-fns";
+
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
 interface CalendarPageSearchProps {
   selectedDate: string;
   question: string;
@@ -50,7 +54,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
 
   const { mutate: updateDiary } = useUpdateDiary({
     onSuccess: () => {
-      alert("일기 수정에 성공했어요.");
+      setIsEditModalOpen(true);
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", dayKey] });
     },
     onError: () => {
@@ -59,7 +63,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
   });
   const { mutate: deleteDiary } = useDeleteDiary({
     onSuccess: () => {
-      alert("일기 삭제에 성공했어요.");
+      setIsDeleteModalOpen(false);
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", dayKey] });
       queryClient.invalidateQueries({ queryKey: ["monthly-diaries", monthKey] });
       router.back();
@@ -82,6 +86,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     if (emotion === null || typeof emotion !== "string") {
       return alert("감정을 선택해주세요.");
     }
+
     updateDiary({ answer, emotion, date: dayKey });
   };
 
@@ -90,6 +95,9 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     if (!id) return;
     deleteDiary(id);
   };
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   return (
     <main className="font-kotra-hope text-primary-200 px-4 pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
       <header className="flex items-center justify-between px-4">
@@ -144,8 +152,6 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
           </div>
           <div className="bg-primary-100 h-px" />
           <div className="text-right">
-            {/* TODO: 버튼을 누르면 바로 실행되는 것이 아닌, 모달창이 뜨도록 수정해야합니다. */}
-
             <button
               type="submit"
               className="bg-primary-100 text-secondary-100 m-1 w-13 rounded-[10px]"
@@ -154,13 +160,19 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
             </button>
             <button
               type="button"
-              onClick={onDeleteDiary}
+              onClick={() => setIsDeleteModalOpen(true)}
               className="bg-primary-100 text-secondary-100 m-1 w-13 rounded-[10px]"
             >
               삭제
             </button>
           </div>
         </form>
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={onDeleteDiary}
+        />
+        <EditModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} />
       </section>
 
       <section>
