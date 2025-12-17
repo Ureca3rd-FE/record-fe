@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { addFriend, removeFriend } from "@/services/follow";
+import { addFriend, fetchFollowers, fetchFollowings, removeFriend } from "@/services/follow";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import type { FollowApiItem } from "./../../../models/follow";
@@ -31,10 +31,7 @@ export function useRemoveFriendMutation(myId: number) {
 export function useFollowersQuery(userId?: number) {
   return useQuery<FollowApiItem[]>({
     queryKey: ["followers", userId],
-    queryFn: async () => {
-      const { data } = await api.get(`/follows/followers/${userId}`);
-      return data.result;
-    },
+    queryFn: () => fetchFollowers(userId!),
     enabled: typeof userId === "number",
   });
 }
@@ -42,10 +39,7 @@ export function useFollowersQuery(userId?: number) {
 export function useFollowingsQuery(userId?: number) {
   return useQuery<FollowApiItem[]>({
     queryKey: ["followings", userId],
-    queryFn: async () => {
-      const { data } = await api.get(`/follows/following/${userId}`);
-      return data.result;
-    },
+    queryFn: () => fetchFollowings(userId!),
     enabled: typeof userId === "number",
   });
 }
