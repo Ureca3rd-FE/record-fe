@@ -2,7 +2,7 @@ import api from "@/lib/axios";
 import { addFriend, removeFriend } from "@/services/follow";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { FollowApiItem } from "./../../../models/follow";
+import type { FollowApiItem } from "./../../../models/follow";
 
 import { queryClient } from "..";
 

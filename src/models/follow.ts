@@ -6,15 +6,3 @@ export interface FollowApiItem {
   followingNickname: string;
   createdAt: string;
 }
-
-export interface FollowUser {
-  userId: number;
-  nickname: string;
-}
-
-export interface FollowListResponse {
-  isSuccess: boolean;
-  code: number;
-  message: string;
-  result: FollowApiItem[];
-}
