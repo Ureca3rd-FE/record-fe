@@ -55,9 +55,22 @@ export default function MyPage() {
         <div className="mb-4 h-[1px] w-full bg-white/40" />
 
         <div className="flex justify-center gap-4">
-          <MyInfoManageButton icon={<NotebookIcon className="size-4" />} label="작성한 일기" />
-          <MyInfoManageButton icon={<FollowingIcon className="size-4" />} label="팔로잉" />
-          <MyInfoManageButton icon={<FollowIcon className="size-4" />} label="팔로우" />
+          <MyInfoManageButton
+            icon={<NotebookIcon className="size-4" />}
+            label="작성한 일기"
+            onClick={() => router.push("/calendar")}
+          />
+          <MyInfoManageButton
+            icon={<FollowingIcon className="size-4" />}
+            label="팔로잉"
+            onClick={() => router.push("/follows?tab=following")}
+          />
+
+          <MyInfoManageButton
+            icon={<FollowIcon className="size-4" />}
+            label="팔로우"
+            onClick={() => router.push("/follows?tab=follower")}
+          />
         </div>
       </div>
 
@@ -125,7 +138,11 @@ export default function MyPage() {
             label="통계 보러가기"
             onClick={() => router.push("/myPage/stats")}
           />
-          <ActionInnerButton icon={<NotebookIcon className="size-8" />} label="일기 작성하기" />
+          <ActionInnerButton
+            icon={<NotebookIcon className="size-8" />}
+            label="일기 작성하기"
+            onClick={() => router.push("/home")}
+          />
         </div>
       </div>
 

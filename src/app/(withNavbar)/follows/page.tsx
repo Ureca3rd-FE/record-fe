@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import CancleIcon from "@/assets/cancleIcon.svg";
 import ChevronLeft from "@/assets/chevronLeft.svg";
@@ -15,8 +15,14 @@ import { useMyInfo } from "@/lib/tanstack/query/user";
 import { cn } from "@/utils/cn";
 
 export default function Follow() {
-  const [isFollower, setIsFollower] = useState(true);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
+
+  const [isFollower, setIsFollower] = useState(() => {
+    if (tab === "following") return false;
+    return true; // follower 기본
+  });
 
   const { data: myInfo } = useMyInfo();
   const myId = myInfo?.result.userId;
@@ -46,7 +52,10 @@ export default function Follow() {
       <div className="flex border-b border-white/40">
         <button
           type="button"
-          onClick={() => setIsFollower(true)}
+          onClick={() => {
+            setIsFollower(true);
+            router.replace("/follows?tab=follower");
+          }}
           className={cn(
             "flex-1 border-b-2 py-3 text-center font-semibold",
             isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
@@ -57,9 +66,12 @@ export default function Follow() {
 
         <button
           type="button"
-          onClick={() => setIsFollower(false)}
+          onClick={() => {
+            setIsFollower(false);
+            router.replace("/follows?tab=following");
+          }}
           className={cn(
-            "flex-1 border-b-2 bg-transparent py-3 text-center font-semibold",
+            "flex-1 border-b-2 py-3 text-center font-semibold",
             !isFollower ? "border-primary-200 text-black" : "text-primary-200/50 border-transparent"
           )}
         >
