@@ -15,3 +15,8 @@ export interface SearchUserDto {
   email: string;
   isFollowed: boolean;
 }
+
+export interface FollowUser {
+  userId: number;
+  nickname: string;
+}
