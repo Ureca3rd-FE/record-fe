@@ -141,7 +141,7 @@ export default function MyPage() {
           <ActionInnerButton
             icon={<NotebookIcon className="size-8" />}
             label="일기 작성하기"
-            onClick={() => router.push("/home")}
+            onClick={() => router.push("/todayDiary")}
           />
         </div>
       </div>

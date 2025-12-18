@@ -71,7 +71,7 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
     onSuccess: (data) => {
       dispatch(setDiarySummary(data.result));
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", date] });
-      router.push("/home/summary");
+      router.push("/todayDiary/summary");
     },
     onError: (error) => {
       setIsSummaryModalOpen(false);

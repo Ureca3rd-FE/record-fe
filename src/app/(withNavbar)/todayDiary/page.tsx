@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 import Logo from "@/assets/logo.svg";
-import EmotionShareDay from "@/components/home/EmotionShareDay";
-import SubmitDiary from "@/components/home/SubmitDiary";
+import EmotionShareDay from "@/components/todayDiary/EmotionShareDay";
+import SubmitDiary from "@/components/todayDiary/SubmitDiary";
 import { getTodayQuestion } from "@/services/question";
 
 import { format } from "date-fns";
@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <main className="px-4 pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
-      <header>
+      <header className="text-primary-200">
         <Logo />
       </header>
       <div className="font-kotra-hope text-primary-200 mt-6">
