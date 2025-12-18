@@ -27,7 +27,7 @@ export default function CalendarPage() {
 
   return (
     <main className="bg-secondary-100 min-h-screen px-4 pt-6 pb-[calc(var(--spacing-navbar)+24px)]">
-      <header>
+      <header className="text-primary-200">
         <Logo />
       </header>
       <div className="font-pretendard mt-6 rounded-xl bg-white/50 text-sm">

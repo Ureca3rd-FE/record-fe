@@ -9,8 +9,8 @@ import House from "@/assets/house.svg";
 export default function Navbar() {
   const path = usePathname();
   const navItems = [
-    { href: "/", label: "홈", icon: <House /> },
-    { href: "/calendar", label: "달력", icon: <Calendar /> },
+    { href: "/todayDiary", label: "오늘의 일기", icon: <Calendar /> },
+    { href: "/calendar", label: "홈", icon: <House /> },
     { href: "/myPage", label: "마이페이지", icon: <Home /> },
   ];
   return (

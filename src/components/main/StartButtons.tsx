@@ -28,7 +28,7 @@ export default function StartButtons() {
         <GoogleIcon />
         <span>Google 계정으로 로그인</span>
       </Button>
-      <Button onClick={() => router.push("/home")} className="rounded-xl py-4">
+      <Button onClick={() => router.push("/todayDiary")} className="rounded-xl py-4">
         로그인 없이 둘러보기
       </Button>
     </div>
