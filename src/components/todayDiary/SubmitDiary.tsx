@@ -6,6 +6,9 @@ import { useRouter } from "next/navigation";
 import { queryClient } from "@/lib/tanstack";
 import { useSubmitDiary, useUpdateDiary } from "@/lib/tanstack/mutation/diary";
 import { useGetDiaryByDate } from "@/lib/tanstack/query/diary";
+import { setDiarySummary } from "@/store/slices/diarySlice";
+
+import { useDispatch } from "react-redux";
 
 import RequireLoginModal from "./RequireLoginModal";
 import SummaryModal from "./SummaryModal";
@@ -46,6 +49,7 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
 
   const { data: diaryByDate } = useGetDiaryByDate(date);
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -64,10 +68,9 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
 
   const { mutate: submitDiary, isPending: isSubmittingDiary } = useSubmitDiary({
     onSuccess: (data) => {
+      dispatch(setDiarySummary(data.result));
       queryClient.invalidateQueries({ queryKey: ["diaryByDate", date] });
-      const summaryKey = ["diarySummary", date];
-      queryClient.setQueryData(summaryKey, data.result);
-      router.push(`/todayDiary/summary?date=${date}`);
+      router.push("/todayDiary/summary");
     },
     onError: (error) => {
       setIsSummaryModalOpen(false);

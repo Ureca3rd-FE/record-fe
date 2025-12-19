@@ -2,24 +2,22 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { redirect, RedirectType, useRouter, useSearchParams } from "next/navigation";
+import { redirect, RedirectType, useRouter } from "next/navigation";
 
 import BackIcon from "@/assets/chevronLeft.svg";
 import Button from "@/components/common/Button";
-import { queryClient } from "@/lib/tanstack";
-import type { SubmitDiaryResponseDTO } from "@/models/diary";
+import type { RootState } from "@/store";
 
 import DOMPurify from "dompurify";
 import download from "downloadjs";
 import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
 
 const runningDalbam = "/dalbam/running-line.webp";
 
 export default function DiarySummary() {
   const [isDownloading, setIsDownloading] = useState(false);
-  const searchParams = useSearchParams();
-  const date = searchParams.get("date");
-  const diarySummary = queryClient.getQueryData<SubmitDiaryResponseDTO>(["diarySummary", date]);
+  const diarySummary = useSelector((state: RootState) => state.diary.diarySummary);
   const summaryRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -44,7 +42,7 @@ export default function DiarySummary() {
     }
   };
 
-  if (diarySummary === undefined) {
+  if (diarySummary === null) {
     return redirect("/todayDiary", RedirectType.replace);
   }
 
