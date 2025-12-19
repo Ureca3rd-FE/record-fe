@@ -68,7 +68,7 @@ export default function MyPage() {
 
           <MyInfoManageButton
             icon={<FollowIcon className="size-4" />}
-            label="팔로우"
+            label="팔로워"
             onClick={() => router.push("/follows?tab=follower")}
           />
         </div>

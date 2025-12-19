@@ -1,4 +1,3 @@
-import api from "@/lib/axios";
 import { addFriend, fetchFollowers, fetchFollowings, removeFriend } from "@/services/follow";
 import { useMutation, useQuery } from "@tanstack/react-query";
 

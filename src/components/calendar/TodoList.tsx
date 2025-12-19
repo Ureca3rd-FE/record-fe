@@ -22,11 +22,8 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
 
   const { data: dailyTodo } = useDailyTodos(dayKey);
 
-  console.log("[오늘의 Todo]", dailyTodo);
-
   const { mutate: deleteTodo } = useDeleteTodo({
     onSuccess: () => {
-      console.log("Todo 삭제 성공");
       alert("Todo 삭제 되었습니다.");
       queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
@@ -46,22 +43,16 @@ export default function TodoList({ selectedDate }: { selectedDate: Date }) {
   });
   const { mutate: createTodo } = useCreateTodo({
     onSuccess: () => {
-      console.log("Todo 생성 성공");
       queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
 
   const { mutate: updateTodo } = useUpdateTodo({
     onSuccess: () => {
-      console.log("Todo 수정 성공");
       queryClient.invalidateQueries({ queryKey: ["todos", dayKey] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   const onEditChange = (todoId: number, value: string) => {
     setEditTodo((prev) => ({

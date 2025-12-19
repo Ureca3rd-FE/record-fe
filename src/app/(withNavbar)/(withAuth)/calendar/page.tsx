@@ -18,9 +18,6 @@ export default function CalendarPage() {
   const router = useRouter();
   const { data: monthlyData } = useMonthlyDiaries(monthKey);
 
-  console.log("[월별 조회 날짜들]", monthlyData?.writtenDates);
-  console.log("[월별 조회 감정 점수들]", monthlyData?.writtenEmotions);
-
   const handleReadDiary = () => {
     router.push(`/calendar/diary/${dayKey}`);
   };
