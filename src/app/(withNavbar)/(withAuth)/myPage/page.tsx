@@ -52,7 +52,7 @@ export default function MyPage() {
         </div>
 
         <p className="mb-1 text-sm opacity-90">내 정보 관리</p>
-        <div className="mb-4 h-[1px] w-full bg-white/40" />
+        <div className="mb-4 h-px w-full bg-white/40" />
 
         <div className="flex justify-center gap-4">
           <MyInfoManageButton

@@ -11,7 +11,7 @@ const curiousDalbam = "/dalbam/curious.webp";
 
 const today = format(new Date(), "yyyy-MM-dd");
 
-export default async function Home() {
+export default async function TodayDiary() {
   const { result } = await getTodayQuestion(today);
 
   return (

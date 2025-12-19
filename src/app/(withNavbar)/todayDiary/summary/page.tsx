@@ -44,7 +44,7 @@ export default function DiarySummary() {
   };
 
   if (diarySummary === null) {
-    return redirect("/home", RedirectType.replace);
+    return redirect("/todayDiary", RedirectType.replace);
   }
 
   const positiveKeywords =

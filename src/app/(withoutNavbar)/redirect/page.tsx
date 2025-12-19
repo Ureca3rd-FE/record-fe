@@ -10,7 +10,7 @@ export default async function Redirect({ searchParams }: RedirectProps) {
   const resolvedSearchParams = await searchParams;
 
   if (resolvedSearchParams.registered === undefined) {
-    return redirect("/home", RedirectType.replace);
+    return redirect("/todayDiary", RedirectType.replace);
   }
 
   return redirect("/signup", RedirectType.replace);

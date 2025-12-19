@@ -29,7 +29,7 @@ export default function Signup() {
   const { mutate: updateUserNickname, isPending: isUpdateUserNicknamePending } =
     useUpdateUserNickname({
       onSuccess: () => {
-        router.replace("/home");
+        router.replace("/todayDiary");
       },
       onError: (error) => {
         alert("닉네임 등록 중 오류가 발생했어요.");
