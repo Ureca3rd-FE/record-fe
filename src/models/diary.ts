@@ -1,5 +1,8 @@
-export interface SubmitDiaryRequestDTO extends UpdateDiaryRequestDTO {
+export interface SubmitDiaryRequestDTO {
   questionId: number;
+  answer: string;
+  emotion: string;
+  date: string;
 }
 
 export interface SubmitDiaryResponseDTO {
@@ -9,8 +12,9 @@ export interface SubmitDiaryResponseDTO {
 }
 
 export interface UpdateDiaryRequestDTO {
-  answer: string;
-  emotion: string;
+  id: number;
+  answer?: string;
+  emotion?: string;
   date: string;
 }
 

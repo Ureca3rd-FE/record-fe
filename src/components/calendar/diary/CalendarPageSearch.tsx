@@ -87,7 +87,9 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
       return alert("감정을 선택해주세요.");
     }
 
-    updateDiary({ answer, emotion, date: dayKey });
+    const id = diaryByDate?.result?.id;
+    if (!id) return;
+    updateDiary({ id, answer, emotion, date: dayKey });
   };
 
   const onDeleteDiary = () => {
@@ -128,7 +130,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
             name="answer"
             defaultValue={defaultAnswer}
             placeholder="답변을 작성해주세요."
-            className="m-0 h-[380px] w-full resize-none outline-none"
+            className="m-0 h-[360px] w-full resize-none outline-none"
           />
           <div className="flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
