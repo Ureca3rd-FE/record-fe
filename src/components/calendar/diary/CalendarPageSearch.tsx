@@ -87,7 +87,17 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
       return alert("감정을 선택해주세요.");
     }
 
-    updateDiary({ answer, emotion, date: dayKey });
+    const id = diaryByDate?.result?.id;
+    if (!id) return;
+
+    updateDiary({
+      id,
+      body: {
+        answer,
+        emotion,
+        date: dayKey,
+      },
+    });
   };
 
   const onDeleteDiary = () => {

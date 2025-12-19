@@ -14,8 +14,11 @@ export const submitDiary = async (
   return data;
 };
 
-export const updateDiary = async (body: UpdateDiaryRequestDTO): Promise<BaseResponseDTO<void>> => {
-  const { data } = await api.put("/diaries/user/by-date", body);
+export const updateDiary = async (
+  id: number,
+  body: UpdateDiaryRequestDTO
+): Promise<BaseResponseDTO<void>> => {
+  const { data } = await api.put(`/diaries/${id}`, body);
   return data;
 };
 
