@@ -24,7 +24,11 @@ export const useSubmitDiary = (
 };
 
 export const useUpdateDiary = (
-  options?: UseMutationOptions<BaseResponseDTO<void>, AxiosError, UpdateDiaryRequestDTO>
+  options?: UseMutationOptions<
+    BaseResponseDTO<UpdateDiaryRequestDTO>,
+    AxiosError,
+    UpdateDiaryRequestDTO
+  >
 ) => {
   return useMutation({
     mutationFn: updateDiary,

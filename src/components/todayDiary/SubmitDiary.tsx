@@ -105,7 +105,10 @@ export default function SubmitDiary({ date, questionId }: SubmitDiaryProps) {
 
     // 일기를 이미 작성한 경우 수정 요청
     if (diaryByDate && diaryByDate.result) {
+      const id = diaryByDate?.result?.id;
+      if (!id) return;
       updateDiary({
+        id,
         answer,
         emotion,
         date,
