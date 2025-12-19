@@ -86,6 +86,7 @@ export default function CalendarPageSearch({ selectedDate, question }: CalendarP
     if (emotion === null || typeof emotion !== "string") {
       return alert("감정을 선택해주세요.");
     }
+
     const id = diaryByDate?.result?.id;
     if (!id) return;
     updateDiary({ id, answer, emotion, date: dayKey });
