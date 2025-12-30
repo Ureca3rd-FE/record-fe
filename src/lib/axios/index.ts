@@ -23,11 +23,12 @@ axios.interceptors.request.use(
 // 응답 인터셉터 추가하기
 axios.interceptors.response.use(
   function (response) {
-    // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 데이터가 있는 작업 수행
     return response;
   },
-  function (error) {
+  async function (error) {
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
     if (error.response?.status === 401) {
       const originalRequest = error.config;
       if (originalRequest.url?.includes("/auth/reissue")) {
@@ -36,10 +37,13 @@ axios.interceptors.response.use(
         }
         return Promise.reject(error);
       }
-    }
-
-    if (error.response?.status !== 401) {
-      return Promise.reject(error);
+      try {
+        await axios.post("/auth/reissue");
+      } catch (error) {
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
+      }
     }
   }
 );
